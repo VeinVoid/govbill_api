@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('data_stnk', function (Blueprint $table) {
+            $table->id('id_stnk');
+            $table->string('no_rangka');
+            $table->string('nama_pemilik');
+            $table->string('nrkb');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('data_s_t_n_k_s');
+    }
+};
