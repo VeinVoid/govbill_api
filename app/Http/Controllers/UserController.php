@@ -26,17 +26,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $dataUser = [
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'phone_number' => $request->input('phone_number'),
-            'image' => $this->encode($request->file('image')->getRealPath()),
-        ];
+        if ($request->file('image') != null) {
+            $dataUser = [
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'phone_number' => $request->input('phone_number'),
+                'image' => $this->encode($request->file('image')->getRealPath()),
+            ];
+            User::create($dataUser);
 
-        User::create($dataUser);
+            return $this->storeResponse($dataUser);
+        } else {
+            $dataUser = [
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'phone_number' => $request->input('phone_number'),
+            ];
+            User::create($dataUser);
 
-        return $this->storeResponse($dataUser);
+            return $this->storeResponse($dataUser);
+        }
     }
 
     /**
