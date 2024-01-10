@@ -46,27 +46,6 @@ Route::prefix('/users')->group(function()
     Route::delete('/delete/{id}', [UserController::class, 'delete']);
 });
 
-// Payment Dana
-Route::get('/payment-dana', [ControllerPaymentDana::class, 'index']);
-Route::post('/payment-dana', [ControllerPaymentDana::class, 'store']);
-Route::get('/payment-dana/{paymentDana}', [ControllerPaymentDana::class, 'show']);
-Route::put('/payment-dana/{paymentDana}', [ControllerPaymentDana::class, 'update']);
-Route::delete('/payment-dana/{paymentDana}', [ControllerPaymentDana::class, 'destroy']);
-
-// Payment Gopay
-Route::get('/payment-gopay', [ControllerPaymentGopay::class, 'index']);
-Route::post('/payment-gopay', [ControllerPaymentGopay::class, 'store']);
-Route::get('/payment-gopay/{paymentGopay}', [ControllerPaymentGopay::class, 'show']);
-Route::put('/payment-gopay/{paymentGopay}', [ControllerPaymentGopay::class, 'update']);
-Route::delete('/payment-gopay/{paymentGopay}', [ControllerPaymentGopay::class, 'destroy']);
-
-// Payment Ovo
-Route::get('/payment-ovo', [ControllerPaymentOvo::class, 'index']);
-Route::post('/payment-ovo', [ControllerPaymentOvo::class, 'store']);
-Route::get('/payment-ovo/{paymentOvo}', [ControllerPaymentOvo::class, 'show']);
-Route::put('/payment-ovo/{paymentOvo}', [ControllerPaymentOvo::class, 'update']);
-Route::delete('/payment-ovo/{paymentOvo}', [ControllerPaymentOvo::class, 'destroy']);
-
 // Tagihan BPJS
 Route::get('/tagihan-bpjs', [ControllerTagihanBPJS::class, 'index']);
 Route::post('/tagihan-bpjs/store', [ControllerTagihanBPJS::class, 'store']);
@@ -125,7 +104,7 @@ Route::delete('/tagihan-user/delete', [ControllerTagihanUser::class, 'destroy'])
 
 // Alamat
 Route::get('/alamat', [ControllerAlamat::class, 'index']);
-Route::post('/alamat', [ControllerAlamat::class, 'store']);
-Route::post('/alamat/{alamat}', [ControllerAlamat::class, 'show']);
-Route::post('/alamat/{alamat}', [ControllerAlamat::class, 'update']);
-Route::delete('/alamat/{alamat}', [ControllerAlamat::class, 'destroy']);
+Route::post('/alamat/store', [ControllerAlamat::class, 'store']);
+Route::post('/alamat/detail', [ControllerAlamat::class, 'show']);
+Route::post('/alamat/put', [ControllerAlamat::class, 'update']);
+Route::delete('/alamat/delete', [ControllerAlamat::class, 'destroy']);

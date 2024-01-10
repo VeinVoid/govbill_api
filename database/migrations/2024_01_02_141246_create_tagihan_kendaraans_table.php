@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_stnk');
             $table->unsignedBigInteger('id_alamat');
+            $table->unsignedBigInteger('id_nik');
             $table->integer('nominal_swdkllj');
             $table->integer('nominal_pkb');
             $table->date('waktu_pembayaran');
@@ -23,6 +24,7 @@ return new class extends Migration
 
             $table->foreign('id_stnk')->references('id_stnk')->on('data_stnk')->onDelete('cascade');
             $table->foreign('id_alamat')->references('id_alamat')->on('alamat')->onDelete('cascade');
+            $table->foreign('id_nik')->references('id_nik')->on('data_nik')->onDelete('cascade');
         });
     }
 

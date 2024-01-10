@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Alamat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ControllerAlamat extends Controller
 {
+    use ResponseController;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $alamatList = Alamat::all();
-        return response()->json($alamatList, 200);
+        return $this->storeResponse($alamatList);
     }
 
 
@@ -22,8 +25,13 @@ class ControllerAlamat extends Controller
      */
     public function store(Request $request)
     {
+        $user = DB::table('user')
+            ->where('token', $request->input('token'))
+            ->value('id_user');
+
+
         $validatedData = $request->validate([
-            'id_user' => 'required',
+            'id_user' => 'nullable',
             'nama_penerima' => 'required',
             'no_hp' => 'required',
             'label_alamat' => 'required',
@@ -31,18 +39,26 @@ class ControllerAlamat extends Controller
             'catatan' => 'nullable',
         ]);
 
+        $validatedData['id_user'] = $user;
+
         $alamat = Alamat::create($validatedData);
 
-        return response()->json($alamat, 201);
+        return $this->storeResponse($alamat);
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(Alamat $alamat)
+    public function show(Request $request)
     {
-        return response()->json($alamat, 200);
+        $user = DB::table('user')
+            ->where('token', $request->input('token'))
+            ->value('id_user');
+
+        $alamat = Alamat::where('id_user', $user)->get();
+
+        return $this->showResponse($alamat);
     }
 
     /**
@@ -51,11 +67,11 @@ class ControllerAlamat extends Controller
     public function update(Request $request, Alamat $alamat)
     {
         $validatedData = $request->validate([
-            'id_user' => 'required',
-            'nama_penerima' => 'required',
-            'no_hp' => 'required',
-            'label_alamat' => 'required',
-            'alamat_lengkap' => 'required',
+            'id_user' => 'nullable',
+            'nama_penerima' => 'nullable',
+            'no_hp' => 'nullable',
+            'label_alamat' => 'nullable',
+            'alamat_lengkap' => 'nullable',
             'catatan' => 'nullable',
         ]);
 

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->string('nomor_tagihan');
             $table->string('tipe_tagihan', 2);
+            $table->char('status', 1);
 
             $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
         });

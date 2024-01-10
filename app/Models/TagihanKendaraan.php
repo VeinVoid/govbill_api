@@ -13,6 +13,7 @@ class TagihanKendaraan extends Model
 
     protected $fillable = [
         'id_stnk',
+        'id_nik',
         'id_alamat',
         'nominal_swdkllj',
         'nominal_pkb',
