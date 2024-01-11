@@ -22,9 +22,9 @@ return new class extends Migration
             $table->date('waktu_tenggat');
             $table->timestamps();
 
-            $table->foreign('id_stnk')->references('id_stnk')->on('data_stnk')->onDelete('cascade');
-            $table->foreign('id_alamat')->references('id_alamat')->on('alamat')->onDelete('cascade');
-            $table->foreign('id_nik')->references('id_nik')->on('data_nik')->onDelete('cascade');
+            $table->foreign('id_stnk')->references('id')->on('data_stnk')->onDelete('cascade');
+            $table->foreign('id_alamat')->references('id')->on('alamat')->onDelete('cascade');
+            $table->foreign('id_nik')->references('id')->on('data_nik')->onDelete('cascade');
         });
     }
 

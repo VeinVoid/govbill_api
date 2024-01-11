@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('history_tagihan', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
             $table->unsignedBigInteger('id_user');
             $table->string('no_pembayaran');
             $table->string('nama_tagihan');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('history_tagihans');
+        Schema::dropIfExists('history_tagihan');
     }
 };

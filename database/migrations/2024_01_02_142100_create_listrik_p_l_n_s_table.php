@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('waktu_tenggat');
             $table->timestamps();
 
-            $table->foreign('id_pln')->references('id_pln')->on('data_pln')->onDelete('cascade');
+            $table->foreign('id_pln')->references('id')->on('data_pln')->onDelete('cascade');
         });
     }
 

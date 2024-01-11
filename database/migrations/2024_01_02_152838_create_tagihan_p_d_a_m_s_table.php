@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('waktu_tenggat');
             $table->timestamps();
 
-            $table->foreign('id_pdam')->references('id_pdam')->on('data_pdam')->onDelete('cascade');
+            $table->foreign('id_pdam')->references('id')->on('data_pdam')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tagihan_p_d_a_m_s');
+        Schema::dropIfExists('tagihan_pdam');
     }
 };

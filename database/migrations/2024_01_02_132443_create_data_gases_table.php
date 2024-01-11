@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_pgn', function (Blueprint $table) {
-            $table->id('id_pgn');
+            $table->id();
             $table->string('no_pelanggan');
             $table->string('nama_pelanggan');
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_gases');
+        Schema::dropIfExists('data_pgn');
     }
 };

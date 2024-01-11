@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('tipe_tagihan', 2);
             $table->char('status', 1);
 
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tagihan_users');
+        Schema::dropIfExists('tagihan_user');
     }
 };

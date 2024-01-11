@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('tagihan_tersedias', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_tagihan_terdaftar');
+            $table->string('no_tagihan');
+            $table->string('jenis_tagihan');
+            $table->string('identitas');
+            $table->string('kota_kabupaten');
+            $table->string('alamat');
+            $table->integer('nominal_bayar');
+            $table->date('waktu_bayar');
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('id_tagihan_terdaftar')->references('id')->on('tagihan_terdaftars')->onDelete('cascade');
         });
     }
 

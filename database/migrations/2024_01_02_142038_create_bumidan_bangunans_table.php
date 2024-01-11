@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('waktu_tenggat');
             $table->timestamps();
 
-            $table->foreign('id_pbb')->references('id_pbb')->on('data_pbb')->onDelete('cascade');
+            $table->foreign('id_pbb')->references('id')->on('data_pbb')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bumidan_bangunans');
+        Schema::dropIfExists('tagihan_pbb');
     }
 };
