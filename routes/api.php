@@ -33,17 +33,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/users')->group(function() 
 {
-    Route::get('/show', [UserController::class, 'showAll']);
-
-    Route::get('/show/{id}', [UserController::class, 'showSpesific']);
-
-    Route::post('/post', [UserController::class, 'store']);
-
+    // Route::get('/show', [UserController::class, 'showAll']);
+    // Route::get('/show/{id}', [UserController::class, 'showSpesific']);
+    // Route::post('/post', [UserController::class, 'store']);
+    Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
-
-    Route::post('/edit/{id}', [UserController::class, 'edit']);
-
-    Route::delete('/delete/{id}', [UserController::class, 'delete']);
+    // Route::post('/edit/{id}', [UserController::class, 'edit']);
+    // Route::delete('/delete/{id}', [UserController::class, 'delete']);
 });
 
 // Tagihan BPJS

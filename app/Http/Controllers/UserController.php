@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,88 +14,128 @@ class UserController extends Controller
 {
 
     use ResponseController;
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    
+    public function register(RegisterRequest $request)
     {
-        //
+        $request->validated();
+
+        $userData = [
+            'username' => $request->username,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'password' => Hash::make($request->password),
+        ];
+
+        $user = User::create($userData);
+        $token = $user->createToken('govbill')->plainTextToken;
+
+        return response([
+            'user' => $user,
+            'token' => $token
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function login(LoginRequest $request) 
     {
-        if ($request->file('image') != null) {
-            $dataUser = [
-                'username' => $request->input('username'),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'phone_number' => $request->input('phone_number'),
-                'image' => $this->encode($request->file('image')->getRealPath()),
-            ];
-            User::create($dataUser);
+        $request->validated();
 
-            return $this->storeResponse($dataUser);
-        } else {
-            $dataUser = [
-                'username' => $request->input('username'),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-                'phone_number' => $request->input('phone_number'),
-            ];
-            User::create($dataUser);
-
-            return $this->storeResponse($dataUser);
+        $user = User::whereEmail($request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => 'Invalid credentials'
+            ], 422);
         }
+
+        $token = $user->createToken('govbill')->plainTextToken;
+
+        return response([
+            'user' => $user,
+            'token' => $token
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
+    // /**
+    //  * Display a listing of the resource.
+    //  */
+    // public function index()
+    // {
+    //     //
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+    // /**
+    //  * Store a newly created resource in storage.
+    //  */
+    // public function store(Request $request)
+    // {
+    //     if ($request->file('image') != null) {
+    //         $dataUser = [
+    //             'username' => $request->input('username'),
+    //             'email' => $request->input('email'),
+    //             'password' => Hash::make($request->input('password')),
+    //             'phone_number' => $request->input('phone_number'),
+    //             'image' => $this->encode($request->file('image')->getRealPath()),
+    //         ];
+    //         User::create($dataUser);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
+    //         return $this->storeResponse($dataUser);
+    //     } else {
+    //         $dataUser = [
+    //             'username' => $request->input('username'),
+    //             'email' => $request->input('email'),
+    //             'password' => Hash::make($request->input('password')),
+    //             'phone_number' => $request->input('phone_number'),
+    //         ];
+    //         User::create($dataUser);
 
-    public function login(Request $request)
-    {
-        $cardential = $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+    //         return $this->storeResponse($dataUser);
+    //     }
+    // }
 
-        $user = User::where('username', $request->input('username'))->firstOrFail();
+    // /**
+    //  * Display the specified resource.
+    //  */
+    // public function show(User $user)
+    // {
+    //     //
+    // }
 
-        if (Auth::attempt($cardential)) {
-            $user->update(['token' => Str::random(60), 'update_at' => now()]);
+    // /**
+    //  * Update the specified resource in storage.
+    //  */
+    // public function update(Request $request, User $user)
+    // {
+    //     //
+    // }
 
-            $responseData = [
-                'token' => $user->token,
-            ];
+    // /**
+    //  * Remove the specified resource from storage.
+    //  */
+    // public function destroy(User $user)
+    // {
+    //     //
+    // }
 
-            return response()->json($responseData, 200);
-        } else {
-            $errorReason = Auth::user() ? 'Invalid Password' : 'User Not Found';
-            return response()->json(['error' => $errorReason], 401);
-        }
-    }
+
+    // public function login(Request $request)
+    // {
+    //     $cardential = $request->validate([
+    //         'username' => 'required',
+    //         'password' => 'required',
+    //     ]);
+
+    //     $user = User::where('username', $request->input('username'))->firstOrFail();
+
+    //     if (Auth::attempt($cardential)) {
+    //         $user->update(['token' => Str::random(60), 'update_at' => now()]);
+
+    //         $responseData = [
+    //             'token' => $user->token,
+    //         ];
+
+    //         return response()->json($responseData, 200);
+    //     } else {
+    //         $errorReason = Auth::user() ? 'Invalid Password' : 'User Not Found';
+    //         return response()->json(['error' => $errorReason], 401);
+    //     }
+    // }
 }
