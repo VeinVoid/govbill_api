@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('metode_pembayaran', function (Blueprint $table) {
+        Schema::create('metode_pembayarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
             $table->string('nama');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('nominal');
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -28,6 +28,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('metode_pembayaran');
+        Schema::table('metode_pembayarans', function (Blueprint $table) {
+            $table->dropForeign(['id_user']);
+        });
+        Schema::dropIfExists('metode_pembayarans');
     }
 };

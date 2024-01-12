@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_bpjs', function (Blueprint $table) {
+        Schema::create('data_pdams', function (Blueprint $table) {
             $table->id();
-            $table->string('no_va');
-            $table->string('nama_peserta');
+            $table->string('no_pelanggan');
+            $table->string('nama_pelanggan');
+            $table->string('kota_kabupaten');
+            $table->text('alamat');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_bpjs');
+        Schema::dropIfExists('data_pdams');
     }
 };

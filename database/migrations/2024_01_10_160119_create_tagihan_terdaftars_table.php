@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('tanggal_bayar');
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_data_tagihan')->references('id')->on('data_tagihans')->onDelete('cascade');
         });
     }
@@ -32,6 +32,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('tagihan_terdaftars', function (Blueprint $table) {
+            $table->dropForeign(['id_user']);
+            $table->dropForeign(['id_data_tagihan']);
+        });
         Schema::dropIfExists('tagihan_terdaftars');
     }
 };

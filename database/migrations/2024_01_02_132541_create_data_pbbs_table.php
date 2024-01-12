@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_stnk', function (Blueprint $table) {
+        Schema::create('data_pbbs', function (Blueprint $table) {
             $table->id();
-            $table->string('no_rangka');
+            $table->string('nop');
             $table->string('nama_pemilik');
-            $table->string('nrkb');
+            $table->string('kota_kabupaten');
+            $table->text('alamat');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_stnk');
+        Schema::dropIfExists('data_pbbs');
     }
 };

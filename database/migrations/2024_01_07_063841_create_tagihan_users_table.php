@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tagihan_user', function (Blueprint $table) {
+        Schema::create('tagihan_users', function (Blueprint $table) {
             $table->id('id_tagihan');
             $table->unsignedBigInteger('id_user');
             $table->string('nomor_tagihan');
             $table->string('tipe_tagihan', 2);
             $table->char('status', 1);
 
-            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tagihan_user');
+        Schema::table('tagihan_users', function (Blueprint $table) {
+            $table->dropForeign(['id_user']);
+        });
+        Schema::dropIfExists('tagihan_users');
     }
 };

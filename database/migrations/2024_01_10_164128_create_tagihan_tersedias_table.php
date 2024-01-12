@@ -24,7 +24,7 @@ return new class extends Migration
             $table->date('waktu_bayar');
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('id_tagihan_terdaftar')->references('id')->on('tagihan_terdaftars')->onDelete('cascade');
         });
     }
@@ -34,6 +34,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('tagihan_tersedias', function (Blueprint $table) {
+            $table->dropForeign(['id_user']);
+            $table->dropForeign(['id_tagihan_terdaftar']);
+        });
         Schema::dropIfExists('tagihan_tersedias');
     }
 };

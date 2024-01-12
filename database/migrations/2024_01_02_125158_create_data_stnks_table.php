@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_nik', function (Blueprint $table) {
+        Schema::create('data_stnks', function (Blueprint $table) {
             $table->id();
-            $table->string('no_nik');
-            $table->string('nama');
-            $table->date('tanggal_lahir');
+            $table->string('no_rangka');
+            $table->string('nama_pemilik');
+            $table->string('nrkb');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data__nik');
+        Schema::dropIfExists('data_stnks');
     }
 };
