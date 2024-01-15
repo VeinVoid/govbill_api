@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('no_pelanggan');
             $table->string('nama_pelanggan');
             $table->string('kota_kabupaten');
-            $table->text('alamat');
             $table->timestamps();
         });
     }

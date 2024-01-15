@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TagihanGas;
+use App\Models\TagihanPGN;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ControllerTagihanGas extends Controller
+class ControllerTagihanPGN extends Controller
 {
     use ResponseController;
 
@@ -45,7 +45,7 @@ class ControllerTagihanGas extends Controller
 
         $validatedData['id_pgn'] = $id_pgn;
 
-        $tagihanGas = TagihanGas::create($validatedData);
+        $tagihanGas = TagihanPGN::create($validatedData);
 
         return $this->storeResponse($tagihanGas);
     }
@@ -86,9 +86,9 @@ class ControllerTagihanGas extends Controller
             'waktu_tenggat' => 'nullable',
         ]);
 
-        TagihanGas::where('id', $tagihanGas->id)->update($validatedData);
+        TagihanPGN::where('id', $tagihanGas->id)->update($validatedData);
 
-        $updatedTagihanGas = TagihanGas::find($tagihanGas->id);
+        $updatedTagihanGas = TagihanPGN::find($tagihanGas->id);
 
         return $this->updateResponse($updatedTagihanGas);
     }
@@ -96,7 +96,7 @@ class ControllerTagihanGas extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TagihanGas $tagihanGas)
+    public function destroy(TagihanPGN $tagihanGas)
     {
         $tagihanGas->delete();
 

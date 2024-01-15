@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('tagihan_pdams', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pdam');
+            $table->string('no_pelanggan');
             $table->integer('tagihan');
-            $table->date('waktu_pembayaran');
+            $table->date('waktu_bisa_bayar');
             $table->date('waktu_tenggat');
             $table->timestamps();
 

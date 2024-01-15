@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataBumiBangunan extends Model
+class DataPBB extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_bumi_bangunan';
+    protected $table = 'data_pbbs';
 
-    protected $primaryKey = 'id_bumi_bangunan';
+    // protected $primaryKey = 'id_data_pbb';
 
     protected $fillable = [
         'nop',
         'nama_pemilik',
-        'provinsi',
-        'kota',
+        'kota_kabupaten',
     ];
 }

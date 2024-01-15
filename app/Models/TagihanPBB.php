@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TagihanGas extends Model
+class TagihanPBB extends Model
 {
     use HasFactory;
 
-    protected $table = 'tagihan_pgn';
+    protected $table = 'tagihan_pbbs';
 
     protected $fillable = [
-        'id_pgn',
+        'id_pbb',
         'tagihan',
-        'waktu_pembayaran',
+        'waktu_bisa_bayar',
         'waktu_tenggat',
     ];
 
-    public function gas()
+    public function bumiBangunan()
     {
-        return $this->belongsTo(DataGas::class, 'id_pgn');
+        return $this->belongsTo(DataPBB::class, 'id_pbb');
     }
 }

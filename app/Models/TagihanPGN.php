@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TagihanBumiDanBangunan extends Model
+class TagihanPGN extends Model
 {
     use HasFactory;
 
-    protected $table = 'tagihan_pbb';
+    protected $table = 'tagihan_pgns';
 
     protected $fillable = [
-        'id_pbb',
+        'id_pgn',
         'tagihan',
-        'waktu_pembayaran',
+        'waktu_bisa_bayar',
         'waktu_tenggat',
     ];
 
-    public function bumiBangunan()
+    public function gas()
     {
-        return $this->belongsTo(DataBumiBangunan::class, 'id_pbb');
+        return $this->belongsTo(DataPGN::class, 'id_pgn');
     }
 }

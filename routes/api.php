@@ -1,16 +1,18 @@
 <?php
 
 use App\Http\Controllers\ControllerAlamat;
+use App\Http\Controllers\ControllerDataPBB;
 use App\Http\Controllers\ControllerPaymentDana;
 use App\Http\Controllers\ControllerPaymentGopay;
 use App\Http\Controllers\ControllerPaymentOvo;
 use App\Http\Controllers\ControllerTagihanBPJS;
-use App\Http\Controllers\ControllerTagihanBumiDanBangunan;
-use App\Http\Controllers\ControllerTagihanGas;
+use App\Http\Controllers\ControllerTagihanPBB;
+use App\Http\Controllers\ControllerTagihanPGN;
 use App\Http\Controllers\ControllerTagihanKendaraan;
 use App\Http\Controllers\ControllerTagihanPLN;
 use App\Http\Controllers\ControllerTagihanPDAM;
 use App\Http\Controllers\ControllerTagihanUser;
+use App\Http\Controllers\TagihanTerdaftarController;
 use App\Http\Controllers\UserController;
 use App\Models\PaymentDana;
 use Illuminate\Http\Request;
@@ -50,18 +52,18 @@ Route::post('/tagihan-bpjs/put', [ControllerTagihanBPJS::class, 'update']);
 Route::delete('/tagihan-bpjs/delete', [ControllerTagihanBPJS::class, 'destroy']);
 
 // Tagihan Bumi dan Bangunan
-Route::get('/tagihan-bumi-dan-bangunan', [ControllerTagihanBumiDanBangunan::class, 'index']);
-Route::post('/tagihan-bumi-dan-bangunan/store', [ControllerTagihanBumiDanBangunan::class, 'store']);
-Route::post('/tagihan-bumi-dan-bangunan/detail', [ControllerTagihanBumiDanBangunan::class, 'show']);
-Route::post('/tagihan-bumi-dan-bangunan/put', [ControllerTagihanBumiDanBangunan::class, 'update']);
-Route::delete('/tagihan-bumi-dan-bangunan/delete', [ControllerTagihanBumiDanBangunan::class, 'destroy']);
+Route::get('/tagihan-bumi-dan-bangunan', [ControllerTagihanPBB::class, 'index']);
+Route::post('/tagihan-bumi-dan-bangunan/store', [ControllerTagihanPBB::class, 'store']);
+Route::post('/tagihan-bumi-dan-bangunan/detail', [ControllerTagihanPBB::class, 'show']);
+Route::post('/tagihan-bumi-dan-bangunan/put', [ControllerTagihanPBB::class, 'update']);
+Route::delete('/tagihan-bumi-dan-bangunan/delete', [ControllerTagihanPBB::class, 'destroy']);
 
 // Tagihan Gas
-Route::get('/tagihan-gas', [ControllerTagihanGas::class, 'index']);
-Route::post('/tagihan-gas/store', [ControllerTagihanGas::class, 'store']);
-Route::post('/tagihan-gas/detail', [ControllerTagihanGas::class, 'show']);
-Route::post('/tagihan-gas/put', [ControllerTagihanGas::class, 'update']);
-Route::delete('/tagihan-gas/delete', [ControllerTagihanGas::class, 'destroy']);
+Route::get('/tagihan-gas', [ControllerTagihanPGN::class, 'index']);
+Route::post('/tagihan-gas/store', [ControllerTagihanPGN::class, 'store']);
+Route::post('/tagihan-gas/detail', [ControllerTagihanPGN::class, 'show']);
+Route::post('/tagihan-gas/put', [ControllerTagihanPGN::class, 'update']);
+Route::delete('/tagihan-gas/delete', [ControllerTagihanPGN::class, 'destroy']);
 
 // Tagihan Kendaraan
 Route::get('/tagihan-kendaraan', [ControllerTagihanKendaraan::class, 'index']);
@@ -104,3 +106,14 @@ Route::post('/alamat/store', [ControllerAlamat::class, 'store']);
 Route::post('/alamat/detail', [ControllerAlamat::class, 'show']);
 Route::post('/alamat/put', [ControllerAlamat::class, 'update']);
 Route::delete('/alamat/delete', [ControllerAlamat::class, 'destroy']);
+
+// Data
+Route::post('/data-pbb/store', [ControllerDataPBB::class, 'store']);
+
+// Tagihan Terdaftar
+Route::prefix('/tagihan-terdaftar')->group(function() 
+{
+    Route::post('/store-pbb', [TagihanTerdaftarController::class, 'storePBB'])->middleware('auth:sanctum');
+    Route::post('/store-pln', [TagihanTerdaftarController::class, 'storePLN'])->middleware('auth:sanctum');
+    Route::post('/store-pgn', [TagihanTerdaftarController::class, 'storePGN'])->middleware('auth:sanctum');
+});

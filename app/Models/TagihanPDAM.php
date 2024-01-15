@@ -9,12 +9,12 @@ class TagihanPDAM extends Model
 {
     use HasFactory;
 
-    protected $table = 'tagihan_pdam';
+    protected $table = 'tagihan_pdams';
 
     protected $fillable = [
         'id_pdam',
         'tagihan',
-        'waktu_pembayaran',
+        'waktu_bisa_bayar',
         'waktu_tenggat',
     ];
 

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataGas;
+use App\Models\DataPGN;
 use Illuminate\Http\Request;
 
-class ControllerDataGas extends Controller
+class ControllerDataPGN extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dataGasList = DataGas::all();
+        $dataGasList = DataPGN::all();
         return response()->json($dataGasList, 200);
     }
 
@@ -26,7 +26,7 @@ class ControllerDataGas extends Controller
             'nama_pelanggan' => 'required',
         ]);
 
-        $dataGas = DataGas::create($validatedData);
+        $dataGas = DataPGN::create($validatedData);
 
         return response()->json($dataGas, 201);
     }
@@ -36,7 +36,7 @@ class ControllerDataGas extends Controller
      */
     public function show($id)
     {
-        $dataGas = DataGas::findOrFail($id);
+        $dataGas = DataPGN::findOrFail($id);
         return response()->json($dataGas, 200);
     }
 
@@ -50,7 +50,7 @@ class ControllerDataGas extends Controller
             'nama_pelanggan' => 'required',
         ]);
 
-        $dataGas = DataGas::findOrFail($id);
+        $dataGas = DataPGN::findOrFail($id);
         $dataGas->update($validatedData);
 
         return response()->json($dataGas, 200);
@@ -61,7 +61,7 @@ class ControllerDataGas extends Controller
      */
     public function destroy($id)
     {
-        $dataGas = DataGas::findOrFail($id);
+        $dataGas = DataPGN::findOrFail($id);
         $dataGas->delete();
 
         return response()->json(null, 204);

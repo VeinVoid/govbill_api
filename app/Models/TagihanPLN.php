@@ -9,12 +9,12 @@ class TagihanPLN extends Model
 {
     use HasFactory;
 
-    protected $table = 'tagihan_pln';
+    protected $table = 'tagihan_plns';
 
     protected $fillable = [
         'id_pln',
         'tagihan',
-        'waktu_pembayaran',
+        'waktu_bisa_bayar',
         'waktu_tenggat',
     ];
 

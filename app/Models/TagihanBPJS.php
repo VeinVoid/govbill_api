@@ -14,7 +14,7 @@ class TagihanBPJS extends Model
     protected $fillable = [
         'id_bpjs',
         'tagihan',
-        'waktu_pembayaran',
+        'waktu_bisa_bayar',
         'waktu_tenggat',
     ];
 

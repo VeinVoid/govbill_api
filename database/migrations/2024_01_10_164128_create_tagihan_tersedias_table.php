@@ -17,9 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_tagihan_terdaftar');
             $table->string('no_tagihan');
             $table->string('jenis_tagihan');
-            $table->string('identitas');
-            $table->string('kota_kabupaten');
-            $table->string('alamat');
+            $table->string('nama_tagihan');
             $table->integer('nominal_bayar');
             $table->date('waktu_bayar');
             $table->timestamps();

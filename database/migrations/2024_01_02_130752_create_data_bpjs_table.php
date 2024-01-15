@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('no_va');
             $table->string('nama_peserta');
-            $table->text('alamat');
             $table->timestamps();
         });
     }

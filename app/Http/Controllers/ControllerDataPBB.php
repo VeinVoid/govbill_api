@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DataBumiBangunan;
+use App\Models\DataPBB;
 use Illuminate\Http\Request;
 
-class ControllerDataBumiBangunan extends Controller
+class ControllerDataPBB extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dataBumiBangunanList = DataBumiBangunan::all();
-        return response()->json($dataBumiBangunanList, 200);
+        $dataPBBList = DataPBB::all();
+        return response()->json($dataPBBList, 200);
     }
 
 
@@ -23,15 +23,14 @@ class ControllerDataBumiBangunan extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'nop' => 'required',
-            'nama_pemilik' => 'required',
-            'provinsi' => 'required',
-            'kota' => 'required',
+            'nop' => 'required|unique:data_pbbs',
+            // 'nama_pemilik' => 'required',
+            'kota_kabupaten' => 'required',
         ]);
 
-        $dataBumiBangunan = DataBumiBangunan::create($validatedData);
+        $dataPBB = DataPBB::create($validatedData);
 
-        return response()->json($dataBumiBangunan, 201);
+        return response()->json($dataPBB, 201);
     }
 
     /**
@@ -39,8 +38,8 @@ class ControllerDataBumiBangunan extends Controller
      */
     public function show($id)
     {
-        $dataBumiBangunan = DataBumiBangunan::findOrFail($id);
-        return response()->json($dataBumiBangunan, 200);
+        $dataPBB = DataPBB::findOrFail($id);
+        return response()->json($dataPBB, 200);
     }
 
     /**
@@ -55,10 +54,10 @@ class ControllerDataBumiBangunan extends Controller
             'kota' => 'required',
         ]);
 
-        $dataBumiBangunan = DataBumiBangunan::findOrFail($id);
-        $dataBumiBangunan->update($validatedData);
+        $dataPBB = DataPBB::findOrFail($id);
+        $dataPBB->update($validatedData);
 
-        return response()->json($dataBumiBangunan, 200);
+        return response()->json($dataPBB, 200);
     }
 
     /**
@@ -66,8 +65,8 @@ class ControllerDataBumiBangunan extends Controller
      */
     public function destroy($id)
     {
-        $dataBumiBangunan = DataBumiBangunan::findOrFail($id);
-        $dataBumiBangunan->delete();
+        $dataPBB = DataPBB::findOrFail($id);
+        $dataPBB->delete();
 
         return response()->json(null, 204);
     }

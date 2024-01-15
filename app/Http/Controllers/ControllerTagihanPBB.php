@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TagihanBumiDanBangunan;
+use App\Models\TagihanPBB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class ControllerTagihanBumiDanBangunan extends Controller
+class ControllerTagihanPBB extends Controller
 {
     use ResponseController;
     
@@ -46,14 +46,14 @@ class ControllerTagihanBumiDanBangunan extends Controller
 
         $validatedData['id_pbb'] = $id_pbb;
 
-        $tagihanBB = TagihanBumiDanBangunan::create($validatedData);
+        $tagihanBB = TagihanPBB::create($validatedData);
 
         return $this->storeResponse($tagihanBB);
     }
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, TagihanBumiDanBangunan $tagihanBB)
+    public function show(Request $request, TagihanPBB $tagihanBB)
     {
         $tagihanBB = DB::table('tagihan_pbb')
             ->leftJoin('data_pbb', 'tagihan_pbb.id_pbb', '=', 'data_pbb.id_pbb')
@@ -90,9 +90,9 @@ class ControllerTagihanBumiDanBangunan extends Controller
             'waktu_tenggat' => 'nullable',
         ]);
 
-        TagihanBumiDanBangunan::where('id', $tagihanBB->id)->update($validatedData);
+        TagihanPBB::where('id', $tagihanBB->id)->update($validatedData);
 
-        $updatedTagihanBB = TagihanBumiDanBangunan::find($tagihanBB->id);
+        $updatedTagihanBB = TagihanPBB::find($tagihanBB->id);
 
         return $this->updateResponse($updatedTagihanBB);
     }
@@ -100,7 +100,7 @@ class ControllerTagihanBumiDanBangunan extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TagihanBumiDanBangunan $tagihanBumiDanBangunan)
+    public function destroy(TagihanPBB $tagihanBumiDanBangunan)
     {
         //
     }

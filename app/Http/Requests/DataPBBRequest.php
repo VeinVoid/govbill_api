@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TagihanTerdaftarRequest extends FormRequest
+class DataPBBRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,8 @@ class TagihanTerdaftarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_tagihan' => 'required|string|unique:tagihan_terdaftars',
-            'nama_tagihan' => 'required|string',
-            'tanggal_bayar' => 'required|string',
-            'bulan_bayar' => 'string',
+            'nop' => 'required|unique:data_pbbs',
+            'kota_kabupaten' => 'required',
         ];
     }
 }
