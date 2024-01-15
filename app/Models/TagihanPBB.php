@@ -13,6 +13,7 @@ class TagihanPBB extends Model
 
     protected $fillable = [
         'id_pbb',
+        'nop',
         'tagihan',
         'waktu_bisa_bayar',
         'waktu_tenggat',

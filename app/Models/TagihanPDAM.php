@@ -13,6 +13,7 @@ class TagihanPDAM extends Model
 
     protected $fillable = [
         'id_pdam',
+        'no_pelanggan',
         'tagihan',
         'waktu_bisa_bayar',
         'waktu_tenggat',

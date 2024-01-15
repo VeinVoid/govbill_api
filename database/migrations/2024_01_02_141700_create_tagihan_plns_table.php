@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pln');
             $table->string('id_pelanggan');
             $table->integer('tagihan');
-            $table->date('waktu_bisa_bayar');
-            $table->date('waktu_tenggat');
+            $table->dateTime('waktu_bisa_bayar');
+            $table->dateTime('waktu_tenggat');
             $table->timestamps();
 
             $table->foreign('id_pln')->references('id')->on('data_plns')->onDelete('cascade');

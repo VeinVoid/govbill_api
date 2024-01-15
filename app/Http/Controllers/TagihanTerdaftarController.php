@@ -30,7 +30,7 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            'data' => $response,
+            $response,
             'message' => 'Tagihan PBB berhasil terdaftar'
         ], 201);
     }
@@ -54,7 +54,7 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            'data' => $response,
+            $response,
             'message' => 'Tagihan PLN berhasil terdaftar'
         ], 201);
     }
@@ -78,7 +78,7 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            'data' => $response,
+            $response,
             'message' => 'Tagihan PGN berhasil terdaftar'
         ], 201);
     }

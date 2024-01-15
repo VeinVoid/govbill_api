@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\ControllerAlamat;
-use App\Http\Controllers\ControllerDataPBB;
+use App\Http\Controllers\ControllerDatapbb;
 use App\Http\Controllers\ControllerPaymentDana;
 use App\Http\Controllers\ControllerPaymentGopay;
 use App\Http\Controllers\ControllerPaymentOvo;
 use App\Http\Controllers\ControllerTagihanBPJS;
-use App\Http\Controllers\ControllerTagihanPBB;
+use App\Http\Controllers\ControllerTagihanpbb;
 use App\Http\Controllers\ControllerTagihanPGN;
 use App\Http\Controllers\ControllerTagihanKendaraan;
 use App\Http\Controllers\ControllerTagihanPLN;
@@ -51,12 +51,12 @@ Route::post('/tagihan-bpjs/detail', [ControllerTagihanBPJS::class, 'show']);
 Route::post('/tagihan-bpjs/put', [ControllerTagihanBPJS::class, 'update']);
 Route::delete('/tagihan-bpjs/delete', [ControllerTagihanBPJS::class, 'destroy']);
 
-// Tagihan Bumi dan Bangunan
-Route::get('/tagihan-bumi-dan-bangunan', [ControllerTagihanPBB::class, 'index']);
-Route::post('/tagihan-bumi-dan-bangunan/store', [ControllerTagihanPBB::class, 'store']);
-Route::post('/tagihan-bumi-dan-bangunan/detail', [ControllerTagihanPBB::class, 'show']);
-Route::post('/tagihan-bumi-dan-bangunan/put', [ControllerTagihanPBB::class, 'update']);
-Route::delete('/tagihan-bumi-dan-bangunan/delete', [ControllerTagihanPBB::class, 'destroy']);
+// Tagihan PBB
+Route::get('/tagihan-pbb', [ControllerTagihanPBB::class, 'index']);
+Route::post('/tagihan-pbb/store', [ControllerTagihanPBB::class, 'store']);
+Route::post('/tagihan-pbb/detail', [ControllerTagihanPBB::class, 'show']);
+Route::post('/tagihan-pbb/put', [ControllerTagihanPBB::class, 'update']);
+Route::delete('/tagihan-pbb/delete', [ControllerTagihanPBB::class, 'destroy']);
 
 // Tagihan Gas
 Route::get('/tagihan-gas', [ControllerTagihanPGN::class, 'index']);
@@ -108,12 +108,12 @@ Route::post('/alamat/put', [ControllerAlamat::class, 'update']);
 Route::delete('/alamat/delete', [ControllerAlamat::class, 'destroy']);
 
 // Data
-Route::post('/data-pbb/store', [ControllerDataPBB::class, 'store']);
+Route::post('/data-pbb/store', [ControllerDatapbb::class, 'store']);
 
 // Tagihan Terdaftar
 Route::prefix('/tagihan-terdaftar')->group(function() 
 {
-    Route::post('/store-pbb', [TagihanTerdaftarController::class, 'storePBB'])->middleware('auth:sanctum');
+    Route::post('/store-pbb', [TagihanTerdaftarController::class, 'storepbb'])->middleware('auth:sanctum');
     Route::post('/store-pln', [TagihanTerdaftarController::class, 'storePLN'])->middleware('auth:sanctum');
     Route::post('/store-pgn', [TagihanTerdaftarController::class, 'storePGN'])->middleware('auth:sanctum');
 });

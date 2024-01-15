@@ -13,6 +13,7 @@ class TagihanPLN extends Model
 
     protected $fillable = [
         'id_pln',
+        'id_pelanggan',
         'tagihan',
         'waktu_bisa_bayar',
         'waktu_tenggat',

@@ -21,6 +21,7 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'profile_picture',
+        'waktu_sekarang',
     ];
 
     protected $guard = [

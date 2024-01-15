@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DataPBB;
 use App\Models\TagihanPBB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,26 +31,24 @@ class ControllerTagihanPBB extends Controller
      */
     public function store(Request $request)
     {
-        $id_pbb = DB::table('data_pbb')
-            ->where('nop', $request->input('nop'))
-            ->value('id_pbb');
+        $dataPBB = DataPBB::where('id', $request->id_pbb)->first();
 
-        if (!$id_pbb) {
+        if (!$dataPBB) {
             return $this->notFoundResponse("Data PBB dengan nop '{$request->input('nop')}' tidak ditemukan.");
         }
 
         $validatedData = $request->validate([
-            'id_pbb' => 'nullable',
+            'id_pbb' => 'required',
             'tagihan' => 'required',
-            'waktu_pembayaran' => 'required',
+            'waktu_bisa_bayar' => 'required',
             'waktu_tenggat' => 'required',
         ]);
 
-        $validatedData['id_pbb'] = $id_pbb;
+        $validatedData['nop'] = $dataPBB->nop;
 
-        $tagihanBB = TagihanPBB::create($validatedData);
+        $tagihanPBB = TagihanPBB::create($validatedData);
 
-        return $this->storeResponse($tagihanBB);
+        return $this->storeResponse($tagihanPBB);
     }
     /**
      * Display the specified resource.

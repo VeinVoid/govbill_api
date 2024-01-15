@@ -24,7 +24,7 @@ class UserController extends Controller
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-        ];
+       ];
 
         $user = User::create($userData);
         $token = $user->createToken('govbill')->plainTextToken;
