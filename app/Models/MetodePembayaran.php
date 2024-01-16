@@ -14,7 +14,8 @@ class MetodePembayaran extends Model
         'jenis',
         'nama', 
         'nomor', 
-        'saldo'
+        'saldo',
+        'pembayaran_utama'
     ];
 
     public function user()

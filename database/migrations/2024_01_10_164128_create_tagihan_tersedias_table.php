@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('nominal_tagihan');
             $table->date('waktu_bayar');
             $table->date('waktu_tenggat');
+            $table->string('status');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(MetodePembayaran::class, 'id_user');
     }
+
+    public function historyTagihan()
+    {
+        return $this->hasMany(HistoryTagihan::class, 'id_user');
+    }
 }

@@ -9,14 +9,18 @@ class HistoryTagihan extends Model
 {
     use HasFactory;
 
-    protected $table = 'history_tagihan';
-
     protected $fillable = [
         'id_user',
+        'id_tagihan_tersedia',
+        'id_metode_pembayaran',
+        'no_pembayaran',
+        'no_tagihan',
+        'jenis_tagihan',
         'nama_tagihan',
+        'nominal_tagihan',
+        'waktu_bayar',
+        'waktu_tenggat',
         'status',
-        'total',
-        'note',
     ];
 
     public function user()

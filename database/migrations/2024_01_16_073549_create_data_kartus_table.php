@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('cvv');
             $table->string('nama_pemilik');
             $table->integer('saldo');
-            $table->boolean('pembayaran_utama');
             $table->timestamps();
         });
     }

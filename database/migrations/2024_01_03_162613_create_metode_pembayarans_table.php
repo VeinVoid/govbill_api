@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nomor');
             $table->string('nama');
             $table->integer('saldo');
+            $table->boolean('pembayaran_utama');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

@@ -14,10 +14,15 @@ return new class extends Migration
         Schema::create('history_tagihans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_tagihan_tersedia');
+            $table->unsignedBigInteger('id_metode_pembayaran');
             $table->string('no_pembayaran');
+            $table->string('jenis_tagihan');
+            $table->string('no_tagihan');
             $table->string('nama_tagihan');
-            $table->integer('harga');
-            $table->text('note')->nullable();
+            $table->integer('nominal_tagihan');
+            $table->date('waktu_bayar');
+            $table->string('status');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

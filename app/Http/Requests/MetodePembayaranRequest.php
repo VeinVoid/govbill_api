@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TagihanTersediaRequest extends FormRequest
+class MetodePembayaranRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,10 @@ class TagihanTersediaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'no_kartu' => 'required|string',
+            'bulan_berlaku' => 'required|string',
+            'tahun_berlaku' => 'required|string',
+            'cvv' => 'required|string',
         ];
     }
 }

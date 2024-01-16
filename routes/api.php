@@ -14,6 +14,7 @@ use App\Http\Controllers\ControllerTagihanPDAM;
 use App\Http\Controllers\ControllerTagihanUser;
 use App\Http\Controllers\DataKartuController;
 use App\Http\Controllers\DataTagihanController;
+use App\Http\Controllers\HistoryTagihanController;
 use App\Http\Controllers\MetodePembayaranController;
 use App\Http\Controllers\TagihanTerdaftarController;
 use App\Http\Controllers\TagihanTersediaController;
@@ -127,6 +128,10 @@ Route::post('/tagihan-tersedia/store', [TagihanTersediaController::class, 'store
 // Metode Pembayaran
 Route::get('/metode-pembayaran', [MetodePembayaranController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/metode-pembayaran/store-kartu', [MetodePembayaranController::class, 'storeKartu'])->middleware('auth:sanctum');
+
+// History Tagihan
+Route::get('/history-tagihan', [HistoryTagihanController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/history-tagihan/store/{id}', [HistoryTagihanController::class, 'store'])->middleware('auth:sanctum');
 
 // Tagihan Terdaftar
 Route::prefix('/tagihan-terdaftar')->group(function() 

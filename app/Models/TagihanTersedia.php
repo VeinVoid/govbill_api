@@ -18,6 +18,7 @@ class TagihanTersedia extends Model
         'nominal_tagihan',
         'waktu_bayar',
         'waktu_tenggat',
+        'status',
     ];
 
     public function user()
