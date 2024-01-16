@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('data_tagihans', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_tagihan');
-            $table->string('no_tagihan')->unique;
-            $table->string('identitas');
-            $table->string('kota_kabupaten')->nullable();
-            $table->string('alamat')->nullable();
+            $table->string('no_tagihan');
+            $table->integer('nominal_tagihan');
+            $table->dateTime('waktu_bisa_bayar');
+            $table->dateTime('waktu_tenggat');
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('metode_pembayarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->string('nama');
+            $table->string('jenis');
             $table->string('nomor');
-            $table->integer('nominal');
+            $table->string('nama');
+            $table->integer('saldo');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

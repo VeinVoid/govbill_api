@@ -12,7 +12,11 @@ use App\Http\Controllers\ControllerTagihanKendaraan;
 use App\Http\Controllers\ControllerTagihanPLN;
 use App\Http\Controllers\ControllerTagihanPDAM;
 use App\Http\Controllers\ControllerTagihanUser;
+use App\Http\Controllers\DataKartuController;
+use App\Http\Controllers\DataTagihanController;
+use App\Http\Controllers\MetodePembayaranController;
 use App\Http\Controllers\TagihanTerdaftarController;
+use App\Http\Controllers\TagihanTersediaController;
 use App\Http\Controllers\UserController;
 use App\Models\PaymentDana;
 use Illuminate\Http\Request;
@@ -109,6 +113,20 @@ Route::delete('/alamat/delete', [ControllerAlamat::class, 'destroy']);
 
 // Data
 Route::post('/data-pbb/store', [ControllerDatapbb::class, 'store']);
+
+// Data Tagihan
+Route::post('/data-tagihan/store', [DataTagihanController::class, 'store']);
+
+// Data Kartu
+Route::post('/data-kartu/store', [DataKartuController::class, 'store']);
+
+// Tagihan Tersedia
+Route::get('/tagihan-tersedia', [TagihanTersediaController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/tagihan-tersedia/store', [TagihanTersediaController::class, 'store'])->middleware('auth:sanctum');
+
+// Metode Pembayaran
+Route::get('/metode-pembayaran', [MetodePembayaranController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/metode-pembayaran/store-kartu', [MetodePembayaranController::class, 'storeKartu'])->middleware('auth:sanctum');
 
 // Tagihan Terdaftar
 Route::prefix('/tagihan-terdaftar')->group(function() 

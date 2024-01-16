@@ -15,17 +15,13 @@ class TagihanTersedia extends Model
         'no_tagihan',
         'jenis_tagihan',
         'nama_tagihan',
-        'nominal_bayar',
+        'nominal_tagihan',
         'waktu_bayar',
+        'waktu_tenggat',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
-    }
-
-    public function tagihanTerdaftar()
-    {
-        return $this->belongsTo(TagihanTerdaftar::class, 'id_tagihan_terdaftar');
     }
 }

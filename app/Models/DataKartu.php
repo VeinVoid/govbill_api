@@ -5,16 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DataTagihan extends Model
+class DataKartu extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'jenis_tagihan',
-        'no_tagihan',
-        'nominal_tagihan',
-        'waktu_bisa_bayar',
-        'waktu_tenggat',
-        'status',
+        'no_kartu',
+        'jenis_kartu',
+        'bulan_berlaku',
+        'tahun_berlaku',
+        'cvv',
+        'nama_pemilik',
+        'saldo',
     ];
 }

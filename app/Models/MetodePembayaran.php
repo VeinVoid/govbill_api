@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MethodePembayaran extends Model
+class MetodePembayaran extends Model
 {
     use HasFactory;
 
-    protected $table = 'methode_pembayaran';
-
     protected $fillable = [
         'id_user', 
+        'jenis',
         'nama', 
         'nomor', 
-        'nominal'
+        'saldo'
     ];
 
     public function user()

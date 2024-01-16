@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,11 +20,26 @@ class UserController extends Controller
     {
         $request->validated();
 
+        $yearNow = Carbon::now()->year;
+
+        $tanggal = 2;
+
+        $bulan = 1;
+
+        $waktu_mulai = Carbon::create(2024, 1, 5, 0, 0, 0);
+
+        $test_waktu = Carbon::create($yearNow, $bulan, $tanggal, 0, 0, 0);
+
+        if ($test_waktu->lt($waktu_mulai)) {
+            $test_waktu->addYear();
+        }
+
         $userData = [
             'username' => $request->username,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+            'test_waktu' => $test_waktu,
        ];
 
         $user = User::create($userData);

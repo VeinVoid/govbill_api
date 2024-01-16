@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class TagihanTerdaftarController extends Controller
 {
-    function storePBB (TagihanTerdaftarRequest $request) 
+    public function storePBB (TagihanTerdaftarRequest $request) 
     {
         $request->validated();
 
@@ -30,12 +30,12 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            $response,
+            'data' => $response,
             'message' => 'Tagihan PBB berhasil terdaftar'
         ], 201);
     }
 
-    function storePLN (TagihanTerdaftarRequest $request) 
+    public function storePLN (TagihanTerdaftarRequest $request) 
     {
         $request->validated();
 
@@ -54,12 +54,12 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            $response,
+            'data' => $response,
             'message' => 'Tagihan PLN berhasil terdaftar'
         ], 201);
     }
 
-    function storePGN (TagihanTerdaftarRequest $request) 
+    public function storePGN (TagihanTerdaftarRequest $request) 
     {
         $request->validated();
 
@@ -78,7 +78,7 @@ class TagihanTerdaftarController extends Controller
         ]);
 
         return response()->json([
-            $response,
+            'data' => $response,
             'message' => 'Tagihan PGN berhasil terdaftar'
         ], 201);
     }

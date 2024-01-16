@@ -21,7 +21,7 @@ class User extends Authenticatable
         'phone_number',
         'password',
         'profile_picture',
-        'waktu_sekarang',
+        'test_waktu',
     ];
 
     protected $guard = [
@@ -37,5 +37,15 @@ class User extends Authenticatable
     public function tagihanTerdaftar()
     {
         return $this->hasMany(TagihanTerdaftar::class, 'id_user');
+    }
+
+    public function tagihanTersedia()
+    {
+        return $this->hasMany(TagihanTersedia::class, 'id_user');
+    }
+
+    public function metodePembayaran()
+    {
+        return $this->hasMany(MetodePembayaran::class, 'id_user');
     }
 }
