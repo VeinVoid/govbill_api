@@ -20,27 +20,12 @@ class UserController extends Controller
     {
         $request->validated();
 
-        $yearNow = Carbon::now()->year;
-
-        $tanggal = 2;
-
-        $bulan = 1;
-
-        $waktu_mulai = Carbon::create(2024, 1, 5, 0, 0, 0);
-
-        $test_waktu = Carbon::create($yearNow, $bulan, $tanggal, 0, 0, 0);
-
-        if ($test_waktu->lt($waktu_mulai)) {
-            $test_waktu->addYear();
-        }
-
         $userData = [
             'username' => $request->username,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-            'test_waktu' => $test_waktu,
-       ];
+        ];
 
         $user = User::create($userData);
         $token = $user->createToken('govbill')->plainTextToken;
@@ -68,6 +53,15 @@ class UserController extends Controller
             'user' => $user,
             'token' => $token
         ], 200);
+    }
+
+    public function logout() 
+    {
+        auth()->user()->tokens()->delete();
+
+        return [
+            'message' => 'Logged out'
+        ];
     }
 
     // /**

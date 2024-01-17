@@ -45,6 +45,7 @@ Route::prefix('/users')->group(function()
     // Route::post('/post', [UserController::class, 'store']);
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
+    Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
     // Route::post('/edit/{id}', [UserController::class, 'edit']);
     // Route::delete('/delete/{id}', [UserController::class, 'delete']);
 });
@@ -128,6 +129,8 @@ Route::post('/tagihan-tersedia/store', [TagihanTersediaController::class, 'store
 // Metode Pembayaran
 Route::get('/metode-pembayaran', [MetodePembayaranController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/metode-pembayaran/store-kartu', [MetodePembayaranController::class, 'storeKartu'])->middleware('auth:sanctum');
+Route::put('/metode-pembayaran/change-pembayaran-utama/{id}', [MetodePembayaranController::class, 'changePembayaranUtama'])->middleware('auth:sanctum');
+Route::delete('/metode-pembayaran/delete/{id}', [MetodePembayaranController::class, 'destroy'])->middleware('auth:sanctum');
 
 // History Tagihan
 Route::get('/history-tagihan', [HistoryTagihanController::class, 'index'])->middleware('auth:sanctum');
@@ -139,4 +142,8 @@ Route::prefix('/tagihan-terdaftar')->group(function()
     Route::post('/store-pbb', [TagihanTerdaftarController::class, 'storepbb'])->middleware('auth:sanctum');
     Route::post('/store-pln', [TagihanTerdaftarController::class, 'storePLN'])->middleware('auth:sanctum');
     Route::post('/store-pgn', [TagihanTerdaftarController::class, 'storePGN'])->middleware('auth:sanctum');
+    Route::post('/store-pdam', [TagihanTerdaftarController::class, 'storePDAM'])->middleware('auth:sanctum');
+    Route::post('/store-bpjs', [TagihanTerdaftarController::class, 'storeBPJS'])->middleware('auth:sanctum');
+    Route::put('/update/{id}', [TagihanTerdaftarController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('/delete/{id}', [TagihanTerdaftarController::class, 'destroy'])->middleware('auth:sanctum');
 });

@@ -26,6 +26,7 @@ class TagihanTerdaftarRequest extends FormRequest
             'nama_tagihan' => 'required|string',
             'tanggal_bayar' => 'required|string',
             'bulan_bayar' => 'string',
+            'kota_kabupaten' => 'string',
         ];
     }
 }

@@ -23,7 +23,6 @@ class ControllerDataPGN extends Controller
     {
         $validatedData = $request->validate([
             'no_pelanggan' => 'required',
-            'nama_pelanggan' => 'required',
         ]);
 
         $dataGas = DataPGN::create($validatedData);

@@ -15,6 +15,5 @@ class DataPLN extends Model
 
     protected $fillable = [
         'id_pelanggan',
-        'nama_pelanggan',
     ];
 }

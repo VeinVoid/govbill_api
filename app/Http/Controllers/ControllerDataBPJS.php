@@ -24,7 +24,6 @@ class ControllerDataBPJS extends Controller
     {
         $validatedData = $request->validate([
             'no_va' => 'required',
-            'nama_peserta' => 'required',
         ]);
 
         $dataBPJS = DataBPJS::create($validatedData);

@@ -15,6 +15,5 @@ class DataPGN extends Model
 
     protected $fillable = [
         'no_pelanggan',
-        'nama_pelanggan',
     ];
 }

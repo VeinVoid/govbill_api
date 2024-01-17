@@ -23,9 +23,7 @@ class ControllerDataPDAM extends Controller
     {
         $validatedData = $request->validate([
             'no_pelanggan' => 'required',
-            'nama_pelanggan' => 'required',
-            'provinsi' => 'required',
-            'kota' => 'required',
+            'kota_kabupaten' => 'required',
         ]);
 
         $dataPDAM = DataPDAM::create($validatedData);

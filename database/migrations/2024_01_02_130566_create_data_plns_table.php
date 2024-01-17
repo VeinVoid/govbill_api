@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('data_plns', function (Blueprint $table) {
             $table->id();
             $table->string('id_pelanggan');
-            $table->string('nama_pelanggan');
             $table->timestamps();
         });
     }

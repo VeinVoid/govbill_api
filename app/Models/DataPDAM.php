@@ -15,8 +15,6 @@ class DataPDAM extends Model
 
     protected $fillable = [
         'no_pelanggan',
-        'nama_pelanggan',
-        'provinsi',
-        'kota'
+        'kota_kabupaten',
     ];
 }

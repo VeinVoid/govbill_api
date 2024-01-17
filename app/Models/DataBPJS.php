@@ -15,6 +15,5 @@ class DataBPJS extends Model
 
     protected $fillable = [
         'no_va',
-        'nama_peserta',
     ];
 }

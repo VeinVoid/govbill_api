@@ -24,7 +24,6 @@ class ControllerDataPBB extends Controller
     {
         $validatedData = $request->validate([
             'nop' => 'required|unique:data_pbbs',
-            // 'nama_pemilik' => 'required',
             'kota_kabupaten' => 'required',
         ]);
 

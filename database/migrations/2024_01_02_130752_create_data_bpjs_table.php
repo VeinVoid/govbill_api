@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('data_bpjs', function (Blueprint $table) {
             $table->id();
             $table->string('no_va');
-            $table->string('nama_peserta');
             $table->timestamps();
         });
     }

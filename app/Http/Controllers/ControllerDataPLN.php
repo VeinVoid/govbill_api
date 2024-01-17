@@ -24,7 +24,6 @@ class ControllerDataPLN extends Controller
     {
         $validatedData = $request->validate([
             'id_pelanggan' => 'required',
-            'nama_pelanggan' => 'required',
         ]);
 
         $dataPLN = DataPLN::create($validatedData);
