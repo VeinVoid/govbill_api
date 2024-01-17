@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->string('nama_penerima');
             $table->string('no_hp');
-            $table->char('label_alamat', 2);
+            $table->char('label_alamat');
             $table->text('alamat_lengkap');
             $table->text('catatan')->nullable();
             $table->timestamps();

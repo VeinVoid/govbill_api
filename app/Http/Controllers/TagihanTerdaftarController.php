@@ -8,6 +8,7 @@ use App\Models\DataPBB;
 use App\Models\DataPDAM;
 use App\Models\DataPGN;
 use App\Models\DataPLN;
+use App\Models\DataSTNK;
 use App\Models\TagihanTerdaftar;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,38 @@ class TagihanTerdaftarController extends Controller
         $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get();
         return response()->json([
             'data' => $tagihanTerdaftar
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'tanggal_bayar' => 'required|string',
+            'bulan_bayar' => 'required|string',
+        ]);
+
+        $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get()->find($id);
+
+        $tagihanTerdaftar->update($validatedData);
+
+        return response()->json([
+            'data' => $tagihanTerdaftar,
+            'message' => 'Tagihan terdaftar berhasil diupdate'
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get()->find($id);
+
+        $tagihanTerdaftar->delete();
+
+        $tagihanTersedia = auth()->user()->tagihanTersedia()->where('id_tagihan_terdaftar', $id)->first();
+
+        $tagihanTersedia->delete();
+
+        return response()->json([
+            'message' => 'Data berhasil dihapus'
         ], 200);
     }
 
@@ -145,35 +178,72 @@ class TagihanTerdaftarController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, $id)
+    public function verifikasiKendaraan(Request $request)
     {
-        $validatedData = $request->validate([
-            'tanggal_bayar' => 'required|string',
-            'bulan_bayar' => 'required|string',
+        $request->validate([
+            'nik' => 'required|string',
+            'nrkb' => 'required|string',
         ]);
 
-        $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get()->find($id);
+        $dataSTNK = DataSTNK::where('nik', $request->nik)
+            ->where('nrkb', $request->nrkb)
+            ->first();
 
-        $tagihanTerdaftar->update($validatedData);
+        if (!$dataSTNK) {
+            return response()->json(['error' => 'Tidak ditemukan kendaraan dengan nik dan nrkb yang diberikan'], 400);
+        }
 
         return response()->json([
-            'data' => $tagihanTerdaftar,
-            'message' => 'Tagihan terdaftar berhasil diupdate'
+            'data' => $dataSTNK,
+            'message' => 'Data STNK berhasil diverifikasi'
         ], 200);
     }
 
-    public function destroy($id)
+    public function storeMotor (TagihanTerdaftarRequest $request) 
     {
-        $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get()->find($id);
+        $request->validated();
 
-        $tagihanTerdaftar->delete();
+        $dataSTNK = DataSTNK::where('nik', $request->nik)
+            ->where('nrkb', $request->nrkb)
+            ->first();
 
-        $tagihanTersedia = auth()->user()->tagihanTersedia()->where('id_tagihan_terdaftar', $id)->first();
-
-        $tagihanTersedia->delete();
+        $response = auth()->user()->tagihanTerdaftar()->create([
+            'no_tagihan' => $dataSTNK->nrkb,
+            'jenis_tagihan' => 'Motor',
+            'nama_tagihan' => $request->nama_tagihan,
+            'tanggal_bayar' => $request->tanggal_bayar,
+            'bulan_bayar' => $request->bulan_bayar,
+            'id_stnk' => $dataSTNK->id,
+            'id_alamat' => $request->id_alamat,
+        ]);
 
         return response()->json([
-            'message' => 'Data berhasil dihapus'
-        ], 200);
+            'data' => $response,
+            'message' => 'Tagihan Motor berhasil terdaftar'
+        ], 201);
+    }
+
+    public function storeMobil (TagihanTerdaftarRequest $request) 
+    {
+        $request->validated();
+
+        $dataSTNK = DataSTNK::where('nik', $request->nik)
+            ->where('nrkb', $request->nrkb)
+            ->first();
+
+        $response = auth()->user()->tagihanTerdaftar()->create([
+            'no_tagihan' => $dataSTNK->nrkb,
+            'jenis_tagihan' => 'Mobil',
+            'nama_tagihan' => $request->nama_tagihan,
+            'tanggal_bayar' => $request->tanggal_bayar,
+            'bulan_bayar' => $request->bulan_bayar,
+            'id_stnk' => $dataSTNK->id,
+            'id_alamat' => $request->id_alamat,
+        ]);
+
+        return response()->json([
+            'data' => $response,
+            'message' => 'Tagihan Mobil berhasil terdaftar'
+        ], 201);
     }
 }

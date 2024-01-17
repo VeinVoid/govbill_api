@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ControllerAlamat;
+use App\Http\Controllers\ControllerDataNIK;
 use App\Http\Controllers\ControllerDatapbb;
+use App\Http\Controllers\ControllerDataSTNK;
 use App\Http\Controllers\ControllerPaymentDana;
 use App\Http\Controllers\ControllerPaymentGopay;
 use App\Http\Controllers\ControllerPaymentOvo;
@@ -46,6 +48,7 @@ Route::prefix('/users')->group(function()
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('/show', [UserController::class, 'show'])->middleware('auth:sanctum');
     // Route::post('/edit/{id}', [UserController::class, 'edit']);
     // Route::delete('/delete/{id}', [UserController::class, 'delete']);
 });
@@ -108,13 +111,16 @@ Route::delete('/tagihan-user/delete', [ControllerTagihanUser::class, 'destroy'])
 
 // Alamat
 Route::get('/alamat', [ControllerAlamat::class, 'index']);
-Route::post('/alamat/store', [ControllerAlamat::class, 'store']);
-Route::post('/alamat/detail', [ControllerAlamat::class, 'show']);
-Route::post('/alamat/put', [ControllerAlamat::class, 'update']);
-Route::delete('/alamat/delete', [ControllerAlamat::class, 'destroy']);
+Route::get('/alamat/show/{id}', [ControllerAlamat::class, 'show'])->middleware('auth:sanctum');
+Route::get('/alamat/show-all', [ControllerAlamat::class, 'showAll'])->middleware('auth:sanctum');
+Route::post('/alamat/store', [ControllerAlamat::class, 'store'])->middleware('auth:sanctum');
+Route::put('/alamat/put/{id}', [ControllerAlamat::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/alamat/delete/{id}', [ControllerAlamat::class, 'destroy'])->middleware('auth:sanctum');
 
 // Data
 Route::post('/data-pbb/store', [ControllerDatapbb::class, 'store']);
+Route::post('/data-stnk/store', [ControllerDataSTNK::class, 'store']);
+Route::get('/data-stnk/show/{id}', [ControllerDataSTNK::class, 'show']);
 
 // Data Tagihan
 Route::post('/data-tagihan/store', [DataTagihanController::class, 'store']);
@@ -123,7 +129,7 @@ Route::post('/data-tagihan/store', [DataTagihanController::class, 'store']);
 Route::post('/data-kartu/store', [DataKartuController::class, 'store']);
 
 // Tagihan Tersedia
-Route::get('/tagihan-tersedia', [TagihanTersediaController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/tagihan-tersedia/show-all', [TagihanTersediaController::class, 'showAll'])->middleware('auth:sanctum');
 Route::post('/tagihan-tersedia/store', [TagihanTersediaController::class, 'store'])->middleware('auth:sanctum');
 
 // Metode Pembayaran
@@ -144,6 +150,9 @@ Route::prefix('/tagihan-terdaftar')->group(function()
     Route::post('/store-pgn', [TagihanTerdaftarController::class, 'storePGN'])->middleware('auth:sanctum');
     Route::post('/store-pdam', [TagihanTerdaftarController::class, 'storePDAM'])->middleware('auth:sanctum');
     Route::post('/store-bpjs', [TagihanTerdaftarController::class, 'storeBPJS'])->middleware('auth:sanctum');
+    Route::post('/store-motor', [TagihanTerdaftarController::class, 'storeMotor'])->middleware('auth:sanctum');
+    Route::post('/store-mobil', [TagihanTerdaftarController::class, 'storeMobil'])->middleware('auth:sanctum');
+    Route::post('/verifikasi-kendaraan', [TagihanTerdaftarController::class, 'verifikasiKendaraan'])->middleware('auth:sanctum');
     Route::put('/update/{id}', [TagihanTerdaftarController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('/delete/{id}', [TagihanTerdaftarController::class, 'destroy'])->middleware('auth:sanctum');
 });

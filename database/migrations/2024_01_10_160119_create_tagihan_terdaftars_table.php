@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('no_tagihan')->unique();
             $table->string('jenis_tagihan');
             $table->string('nama_tagihan');
-            $table->string('tanggal_bayar');
-            $table->string('bulan_bayar')->nullable();
+            $table->integer('tanggal_bayar');
+            $table->integer('bulan_bayar')->nullable();
+            $table->unsignedBigInteger('id_stnk')->nullable();
+            $table->unsignedBigInteger('id_alamat')->nullable();
             $table->timestamps();
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

@@ -22,9 +22,7 @@ class ControllerDataNIK extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_nik' => 'required',
-            'nama' => 'required',
-            'tanggal_lahir' => 'required',
+            'nik' => 'required',
         ]);
 
         $dataNIK = DataNIK::create($validatedData);

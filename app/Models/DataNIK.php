@@ -9,13 +9,9 @@ class DataNIK extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_nik';
-
-    protected $primaryKey = 'id_nik';
+    protected $table = 'data_niks';
 
     protected $fillable = [
-        'no_nik',
-        'nama',
-        'tanggal_lahir',
+        'nik',
     ];
 }

@@ -22,9 +22,12 @@ class ControllerDataSTNK extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'no_reg' => 'required',
+            'nik' => 'required',
+            'no_rangka' => 'required',
             'nama_pemilik' => 'required',
+            'merk_kendaraan' => 'required',
             'nrkb' => 'required',
+            'bulan_tenggat' => 'required'
         ]);
 
         $dataSTNK = DataSTNK::create($validatedData);
@@ -37,7 +40,7 @@ class ControllerDataSTNK extends Controller
      */
     public function show($id)
     {
-        $dataSTNK = DataSTNK::findOrFail($id);
+        $dataSTNK = DataSTNK::find($id);
         return response()->json($dataSTNK, 200);
     }
 
@@ -47,7 +50,7 @@ class ControllerDataSTNK extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'no_reg' => 'required',
+            'no_rangka' => 'required',
             'nama_pemilik' => 'required',
             'nrkb' => 'required',
         ]);

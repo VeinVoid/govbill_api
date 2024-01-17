@@ -16,6 +16,8 @@ class TagihanTerdaftar extends Model
         'jenis_tagihan',
         'tanggal_bayar',
         'bulan_bayar',
+        'id_stnk',
+        'id_alamat'
     ];
 
     public function user()

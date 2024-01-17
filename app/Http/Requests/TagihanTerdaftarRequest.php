@@ -22,11 +22,15 @@ class TagihanTerdaftarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_tagihan' => 'required|string|unique:tagihan_terdaftars',
+            'no_tagihan' => 'string|unique:tagihan_terdaftars',
             'nama_tagihan' => 'required|string',
             'tanggal_bayar' => 'required|string',
             'bulan_bayar' => 'string',
             'kota_kabupaten' => 'string',
+            'id_stnk' => 'integer',
+            'nik' => 'string',
+            'nrkb' => 'string',
+            'id_alamat' => 'integer',
         ];
     }
 }

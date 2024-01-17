@@ -33,6 +33,11 @@ class User extends Authenticatable
         'remember_token'
     ];
 
+    public function alamat()
+    {
+        return $this->hasMany(Alamat::class, 'id_user');
+    }
+
     public function tagihanTerdaftar()
     {
         return $this->hasMany(TagihanTerdaftar::class, 'id_user');

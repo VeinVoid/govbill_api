@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('data_stnks', function (Blueprint $table) {
             $table->id();
+            $table->string('nik');
             $table->string('no_rangka');
             $table->string('nama_pemilik');
+            $table->string('merk_kendaraan');
             $table->string('nrkb');
+            $table->integer('bulan_tenggat');
             $table->timestamps();
         });
     }

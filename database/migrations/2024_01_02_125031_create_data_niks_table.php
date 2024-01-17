@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('data_niks', function (Blueprint $table) {
             $table->id();
-            $table->string('no_nik');
-            $table->string('nama');
-            $table->date('tanggal_lahir');
+            $table->string('nik');
+            // $table->string('nama');
+            // $table->date('tanggal_lahir');
             $table->timestamps();
         });
     }

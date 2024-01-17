@@ -9,13 +9,15 @@ class DataSTNK extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_stnk';
-
-    protected $primaryKey = 'id_stnk';
+    protected $table = 'data_stnks';
 
     protected $fillable = [
-        'no_reg',
+        'nik',
+        'no_rangka',
         'nama_pemilik',
+        'merk_kendaraan',
         'nrkb',
+        'tanggal_tenggat',
+        'bulan_tenggat'
     ];
 }

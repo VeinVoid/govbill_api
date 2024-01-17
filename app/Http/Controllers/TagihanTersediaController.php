@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class TagihanTersediaController extends Controller
 {
-    public function index()
+    public function showAll()
     {
         $tagihanTersedia = TagihanTersedia::where('id_user', auth()->user()->id)
             ->where('status', 'Belum Lunas')

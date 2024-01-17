@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AlamatRequest;
 use App\Models\Alamat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,70 +24,52 @@ class ControllerAlamat extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AlamatRequest $request)
     {
-        $user = DB::table('user')
-            ->where('token', $request->input('token'))
-            ->value('id_user');
+        $validatedData = $request->validated();
+    
+        $response = auth()->user()->alamat()->create($validatedData);
 
-
-        $validatedData = $request->validate([
-            'id_user' => 'nullable',
-            'nama_penerima' => 'required',
-            'no_hp' => 'required',
-            'label_alamat' => 'required',
-            'alamat_lengkap' => 'required',
-            'catatan' => 'nullable',
-        ]);
-
-        $validatedData['id_user'] = $user;
-
-        $alamat = Alamat::create($validatedData);
-
-        return $this->storeResponse($alamat);
+        return $this->storeResponse($response);
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function showAll()
     {
-        $user = DB::table('user')
-            ->where('token', $request->input('token'))
-            ->value('id_user');
-
-        $alamat = Alamat::where('id_user', $user)->get();
+        $alamat = auth()->user()->alamat()->get();
 
         return $this->showResponse($alamat);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Alamat $alamat)
+    public function show($id)
     {
-        $validatedData = $request->validate([
-            'id_user' => 'nullable',
-            'nama_penerima' => 'nullable',
-            'no_hp' => 'nullable',
-            'label_alamat' => 'nullable',
-            'alamat_lengkap' => 'nullable',
-            'catatan' => 'nullable',
-        ]);
+        $alamat = auth()->user()->alamat()->find($id);
+
+        return $this->showResponse($alamat);
+    }
+
+    public function update(AlamatRequest $request, $id)
+    {
+        $validatedData = $request->validated();
+
+        $alamat = auth()->user()->alamat()->find($id);
 
         $alamat->update($validatedData);
 
-        return response()->json($alamat, 200);
+        return $this->updateResponse($alamat);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Alamat $alamat)
+    public function destroy($id)
     {
+        $alamat = auth()->user()->alamat()->find($id);
+
         $alamat->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'message' => 'Data berhasil dihapus'
+        ], 200);
     }
 }

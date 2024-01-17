@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\DataKartu;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,11 +21,14 @@ class UserController extends Controller
     {
         $request->validated();
 
+        $image_path = $request->file('profile_picture')->store('profile_picture', 'public');
+
         $userData = [
             'username' => $request->username,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+            'profile_picture' => $image_path,
         ];
 
         $user = User::create($userData);
@@ -62,6 +66,15 @@ class UserController extends Controller
         return [
             'message' => 'Logged out'
         ];
+    }
+
+    public function show()
+    {
+        $user = auth()->user();
+
+        return response([
+            'user' => $user
+        ], 200);
     }
 
     // /**
