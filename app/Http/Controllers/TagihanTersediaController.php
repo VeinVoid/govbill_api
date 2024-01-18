@@ -78,4 +78,15 @@ class TagihanTersediaController extends Controller
             }
         }
     }
+
+    public function showTotalTagihan()
+    {
+        $totalTagihan = TagihanTersedia::where('id_user', auth()->user()->id)
+            ->sum('nominal_tagihan');
+
+        return response()->json([
+            'data' => $totalTagihan,
+            'message' => 'Total tagihan berhasil diambil'
+        ], 200);
+    }
 }

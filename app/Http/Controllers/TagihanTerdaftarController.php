@@ -25,6 +25,7 @@ class TagihanTerdaftarController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'nama_tagihan' => 'required|string',
             'tanggal_bayar' => 'required|string',
             'bulan_bayar' => 'required|string',
         ]);

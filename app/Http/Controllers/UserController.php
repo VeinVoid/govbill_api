@@ -21,7 +21,11 @@ class UserController extends Controller
     {
         $request->validated();
 
-        $image_path = $request->file('profile_picture')->store('profile_picture', 'public');
+        if ($request->hasFile('profile_picture')) {
+            $image_path = $request->file('profile_picture')->store('profile_picture', 'public');
+        } else {
+            $image_path = null;
+        }
 
         $userData = [
             'username' => $request->username,

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tagihan_terdaftars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->string('no_tagihan')->unique();
+            $table->string('no_tagihan');
             $table->string('jenis_tagihan');
             $table->string('nama_tagihan');
             $table->integer('tanggal_bayar');

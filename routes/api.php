@@ -131,6 +131,7 @@ Route::post('/data-kartu/store', [DataKartuController::class, 'store']);
 // Tagihan Tersedia
 Route::get('/tagihan-tersedia/show-all', [TagihanTersediaController::class, 'showAll'])->middleware('auth:sanctum');
 Route::post('/tagihan-tersedia/store', [TagihanTersediaController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/tagihan-tersedia/show-total', [TagihanTersediaController::class, 'showTotalTagihan'])->middleware('auth:sanctum');
 
 // Metode Pembayaran
 Route::get('/metode-pembayaran', [MetodePembayaranController::class, 'index'])->middleware('auth:sanctum');
