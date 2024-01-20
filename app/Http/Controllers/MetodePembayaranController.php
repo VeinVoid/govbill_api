@@ -17,6 +17,14 @@ class MetodePembayaranController extends Controller
         ], 200);
     }
 
+    public function showAll()
+    {
+        $metodePembayaran = auth()->user()->metodePembayaran()->get();
+        return response()->json([
+            'data' => $metodePembayaran
+        ], 200);
+    }
+
     public function storeKartu(MetodePembayaranRequest $request)
     {
         $request->validated();

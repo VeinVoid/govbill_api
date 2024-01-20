@@ -9,7 +9,7 @@ class DataPDAM extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_pdam';
+    protected $table = 'data_pdams';
 
     protected $primaryKey = 'id_pdam';
 

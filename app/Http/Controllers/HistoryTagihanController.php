@@ -17,11 +17,9 @@ class HistoryTagihanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function showAll()
     {
-        $historyTagihan = HistoryTagihan::where('id_user', auth()->user()->id)
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $historyTagihan = auth()->user()->historyTagihan()->orderBy('created_at', 'asc')->get();
 
         return response()->json([
             'data' => $historyTagihan,

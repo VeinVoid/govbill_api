@@ -22,7 +22,7 @@ class TagihanTerdaftarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_tagihan' => 'required|string',
+            'no_tagihan' => 'string',
             'nama_tagihan' => 'required|string',
             'tanggal_bayar' => 'required|string',
             'bulan_bayar' => 'string',

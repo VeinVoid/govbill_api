@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('data_pdams', function (Blueprint $table) {
             $table->id();
             $table->string('no_pelanggan');
-            $table->string('nama_pelanggan');
             $table->string('kota_kabupaten');
             $table->timestamps();
         });

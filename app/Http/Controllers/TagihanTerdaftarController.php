@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class TagihanTerdaftarController extends Controller
 {
-    public function index()
+    public function showAll()
     {
         $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get();
         return response()->json([
@@ -27,7 +27,7 @@ class TagihanTerdaftarController extends Controller
         $validatedData = $request->validate([
             'nama_tagihan' => 'required|string',
             'tanggal_bayar' => 'required|string',
-            'bulan_bayar' => 'required|string',
+            'bulan_bayar' => 'string',
         ]);
 
         $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get()->find($id);

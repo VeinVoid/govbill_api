@@ -9,9 +9,7 @@ class DataPLN extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_pln';
-
-    protected $primaryKey = 'id_pln';
+    protected $table = 'data_plns';
 
     protected $fillable = [
         'id_pelanggan',

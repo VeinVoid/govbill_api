@@ -54,7 +54,6 @@ class TagihanTersediaController extends Controller
                     }
 
                     $existingTagihanTersedia = TagihanTersedia::where('no_tagihan', $tagihanTerdaftars->no_tagihan)
-                        ->where('waktu_bayar', $waktu_bayar)
                         ->first();
 
                     if (!$existingTagihanTersedia) {
@@ -85,7 +84,7 @@ class TagihanTersediaController extends Controller
             ->sum('nominal_tagihan');
 
         return response()->json([
-            'data' => $totalTagihan,
+            'total' => $totalTagihan,
             'message' => 'Total tagihan berhasil diambil'
         ], 200);
     }
