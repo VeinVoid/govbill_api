@@ -9,7 +9,7 @@ class DataPGN extends Model
 {
     use HasFactory;
 
-    protected $table = 'data_pgn';
+    protected $table = 'data_pgns';
 
     protected $primaryKey = 'id_pgn';
 

@@ -29,8 +29,6 @@ class HistoryTagihanController extends Controller
 
     public function store($id_tagihan_tersedia)
     {
-        // $request->validated();
-
         $dataTagihanTersedia = TagihanTersedia::where('id', $id_tagihan_tersedia)->first();
         $dataMetodePembayaran = MetodePembayaran::where('pembayaran_utama', true)->first();
         $dataKartu = DataKartu::where('id', $dataMetodePembayaran->id)->first();

@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('tagihan:otomatis')->dailyAt('00:00');
+        // $schedule->command('tagihan:otomatis')->dailyAt('00:00');
+        $schedule->command('tagihan:otomatis')->everyMinute();
     }
 
     /**

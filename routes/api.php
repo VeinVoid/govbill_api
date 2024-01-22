@@ -5,6 +5,7 @@ use App\Http\Controllers\ControllerDataBPJS;
 use App\Http\Controllers\ControllerDataNIK;
 use App\Http\Controllers\ControllerDatapbb;
 use App\Http\Controllers\ControllerDataPDAM;
+use App\Http\Controllers\ControllerDataPGN;
 use App\Http\Controllers\ControllerDataPLN;
 use App\Http\Controllers\ControllerDataSTNK;
 use App\Http\Controllers\ControllerPaymentDana;
@@ -127,6 +128,7 @@ Route::get('/data-stnk/show/{id}', [ControllerDataSTNK::class, 'show']);
 Route::post('/data-pln/store', [ControllerDataPLN::class, 'store']);
 Route::post('/data-pdam/store', [ControllerDataPDAM::class, 'store']);
 Route::post('/data-bpjs/store', [ControllerDataBPJS::class, 'store']);
+Route::post('/data-pgn/store', [ControllerDataPGN::class, 'store']);
 
 // Data Tagihan
 Route::post('/data-tagihan/store', [DataTagihanController::class, 'store']);

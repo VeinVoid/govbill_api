@@ -6,6 +6,7 @@ use App\Models\DataTagihan;
 use App\Models\TagihanTerdaftar;
 use App\Models\TagihanTersedia;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 class TagihanTersediaController extends Controller
@@ -36,40 +37,47 @@ class TagihanTersediaController extends Controller
             if ($today->between($waktuBisaBayar, $waktuTenggat)) {
                 foreach ($dataTagihans as $dataTagihan) {
 
-                    $tagihanTerdaftars = TagihanTerdaftar::where('no_tagihan', $dataTagihan->no_tagihan)->first();
+                    $tagihanTerdaftars = TagihanTerdaftar::where('id_user', auth()->user()->id)->get();
 
-                    $yearNow = Carbon::now()->year;
+                    $responses = [];
 
-                    $bulanBayar = $tagihanTerdaftars->bulan_bayar ?? Carbon::now()->month;
+                    foreach ($tagihanTerdaftars as $tagihanTerdaftar) {
+                        $yearNow = Carbon::now()->year;
 
-                    $waktu_bayar = Carbon::create(
-                        $yearNow, 
-                        $bulanBayar, 
-                        $tagihanTerdaftars->tanggal_bayar, 
-                        0, 0, 0
-                    );
+                        $bulanBayar = $tagihanTerdaftar->bulan_bayar ?? Carbon::now()->month;
 
-                    if ($waktu_bayar->lt($dataTagihan->waktu_bisa_bayar)) {
-                        $waktu_bayar->addYear();
+                        $waktu_bayar = Carbon::create(
+                            $yearNow, 
+                            $bulanBayar, 
+                            $tagihanTerdaftar->tanggal_bayar, 
+                            0, 0, 0
+                        );
+
+                        if ($waktu_bayar->lt($dataTagihan->waktu_bisa_bayar)) {
+                            $waktu_bayar->addYear();
+                        }
+
+                        $existingTagihanTersedia = TagihanTersedia::where('no_tagihan', $tagihanTerdaftar->no_tagihan)->first();
+                    
+                        if (!$existingTagihanTersedia) {
+                            $response = auth()->user()->tagihanTersedia()->create([
+                                'id_tagihan_terdaftar' => $tagihanTerdaftar->id,
+                                'jenis_tagihan' => $tagihanTerdaftar->jenis_tagihan,
+                                'no_tagihan' => $tagihanTerdaftar->no_tagihan,
+                                'nama_tagihan' => $tagihanTerdaftar->nama_tagihan,
+                                'nominal_tagihan' => $dataTagihan->nominal_tagihan,
+                                'waktu_bayar' => $waktu_bayar,
+                                'waktu_tenggat' => $dataTagihan->waktu_tenggat,
+                                'status' => 'Belum Lunas',
+                            ]);
+                    
+                            $responses[] = $response;
+                        }
                     }
-
-                    $existingTagihanTersedia = TagihanTersedia::where('no_tagihan', $tagihanTerdaftars->no_tagihan)
-                        ->first();
-
-                    if (!$existingTagihanTersedia) {
-                        $response = auth()->user()->tagihanTersedia()->create([
-                            'id_tagihan_terdaftar' => $tagihanTerdaftars->id,
-                            'jenis_tagihan' => $tagihanTerdaftars->jenis_tagihan,
-                            'no_tagihan' => $tagihanTerdaftars->no_tagihan,
-                            'nama_tagihan' => $tagihanTerdaftars->nama_tagihan,
-                            'nominal_tagihan' => $dataTagihan->nominal_tagihan,
-                            'waktu_bayar' => $waktu_bayar,
-                            'waktu_tenggat' => $dataTagihan->waktu_tenggat,
-                            'status' => 'Belum Lunas',
-                        ]);
-
+                    
+                    if (!empty($responses)) {
                         return response()->json([
-                            'data' => $response,
+                            'data' => $responses,
                             'message' => 'Tagihan Tersedia berhasil terdaftar'
                         ], 201);
                     }
@@ -86,6 +94,26 @@ class TagihanTersediaController extends Controller
         return response()->json([
             'total' => $totalTagihan,
             'message' => 'Total tagihan berhasil diambil'
+        ], 200);
+    }
+
+    public function update($id, Request $request)
+    {
+        $request->validate([
+            'waktu_bayar' => 'required|date',
+        ]);
+
+        $tagihanTersedia = TagihanTersedia::where('id_user', auth()->user()->id)
+            ->where('id', $id)
+            ->first();
+
+        $tagihanTersedia->update([
+            'waktu_bayar' => $request->waktu_bayar,
+        ]);
+
+        return response()->json([
+            'data' => $tagihanTersedia,
+            'message' => 'Jadwal pembayaran berhasil diupdate'
         ], 200);
     }
 }
