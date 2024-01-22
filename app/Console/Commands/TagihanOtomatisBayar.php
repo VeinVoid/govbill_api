@@ -29,13 +29,8 @@ class TagihanOtomatisBayar extends Command
      */
     public function handle()
     {
-        $dateNow = Carbon::now()->format('Y-m-d');
 
-        $tagihanTersedia = TagihanTersedia::where('waktu_bayar', $dateNow)->where('status', 'Belum Lunas')->get();
-
-        foreach ($tagihanTersedia as $tagihan) {
-            $historyTagihanController = new HistoryTagihanController();
-            $historyTagihanController->store($tagihan->id);
-        }
+        $historyTagihanController = new HistoryTagihanController();
+        $historyTagihanController->store();
     }
 }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\HistoryTagihanRequest;
 use App\Models\DataKartu;
+use App\Models\DataTagihan;
 use App\Models\HistoryTagihan;
 use App\Models\MetodePembayaran;
 use App\Models\TagihanTersedia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,40 +29,56 @@ class HistoryTagihanController extends Controller
         ], 200);
     }
 
-    public function store($id_tagihan_tersedia)
+    public function store()
     {
-        $dataTagihanTersedia = TagihanTersedia::where('id', $id_tagihan_tersedia)->first();
-        $dataMetodePembayaran = MetodePembayaran::where('pembayaran_utama', true)->first();
-        $dataKartu = DataKartu::where('id', $dataMetodePembayaran->id)->first();
+        $dateNow = Carbon::now()->format('Y-m-d');
+        $tagihanTersedias = TagihanTersedia::where('waktu_bayar', $dateNow)->where('status', 'Belum Lunas')->get();
+        
+        $responses = [];
 
-        $dataTagihanTersedia->update([
-            'status' => 'Lunas',
-        ]);
+        foreach ($tagihanTersedias as $tagihanTersedia) {
+            $dataTagihan = DataTagihan::where('no_tagihan', $tagihanTersedia->no_tagihan)->first();
+            $metodePembayaran = MetodePembayaran::where('id_user', $tagihanTersedia->id_user)->where('pembayaran_utama', true)->first();
+            $dataKartu = DataKartu::where('id', $metodePembayaran->id)->first();
+    
+            $tagihanTersedia->update([
+                'status' => 'Lunas',
+            ]);
 
-        $dataMetodePembayaran->update([
-            'saldo' => $dataMetodePembayaran->saldo - $dataTagihanTersedia->nominal_tagihan,
-        ]);
+            $dataTagihan->update([
+                'status' => 'Lunas',
+            ]);
+    
+            $metodePembayaran->update([
+                'saldo' => $metodePembayaran->saldo - $tagihanTersedia->nominal_tagihan,
+            ]);
+    
+            $dataKartu->update([
+                'saldo' => $dataKartu->saldo - $tagihanTersedia->nominal_tagihan,
+            ]);
 
-        $dataKartu->update([
-            'saldo' => $dataKartu->saldo - $dataTagihanTersedia->nominal_tagihan,
-        ]);
+            $response = HistoryTagihan::create([
+                'id_user' => $tagihanTersedia->id_user,
+                'id_tagihan_tersedia' => $tagihanTersedia->id,
+                'id_metode_pembayaran' => $metodePembayaran->id,
+                'no_pembayaran' => $this->generateUniqueNoPembayaran(),
+                'jenis_tagihan' => $tagihanTersedia->jenis_tagihan,
+                'no_tagihan' => $tagihanTersedia->no_tagihan,
+                'nama_tagihan' => $tagihanTersedia->nama_tagihan,
+                'nominal_tagihan' => $tagihanTersedia->nominal_tagihan,
+                'waktu_bayar' => $tagihanTersedia->waktu_bayar,
+                'status' => $tagihanTersedia->status,
+            ]);
 
-        $response = auth()->user()->historyTagihan()->create([
-            'id_tagihan_tersedia' => $dataTagihanTersedia->id,
-            'id_metode_pembayaran' => $dataMetodePembayaran->id,
-            'no_pembayaran' => $this->generateUniqueNoPembayaran(),
-            'jenis_tagihan' => $dataTagihanTersedia->jenis_tagihan,
-            'no_tagihan' => $dataTagihanTersedia->no_tagihan,
-            'nama_tagihan' => $dataTagihanTersedia->nama_tagihan,
-            'nominal_tagihan' => $dataTagihanTersedia->nominal_tagihan,
-            'waktu_bayar' => $dataTagihanTersedia->waktu_bayar,
-            'status' => $dataTagihanTersedia->status,
-        ]);
+            $responses[] = $response;
+        }
 
-        return response()->json([
-            'data' => $response,
-            'message' => 'History Tagihan berhasil ditambahkan'
-        ], 201);
+        if (!empty($responses)) {
+            return response()->json([
+                'data' => $responses,
+                'message' => 'History tagihan berhasil ditambahkan'
+            ], 201);
+        }
 
     }
 
