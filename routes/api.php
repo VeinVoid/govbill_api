@@ -20,6 +20,7 @@ use App\Http\Controllers\ControllerTagihanPDAM;
 use App\Http\Controllers\ControllerTagihanUser;
 use App\Http\Controllers\DataKartuController;
 use App\Http\Controllers\DataTagihanController;
+use App\Http\Controllers\DemoAppController;
 use App\Http\Controllers\HistoryTagihanController;
 use App\Http\Controllers\MetodePembayaranController;
 use App\Http\Controllers\TagihanTerdaftarController;
@@ -151,6 +152,9 @@ Route::delete('/metode-pembayaran/delete/{id}', [MetodePembayaranController::cla
 // History Tagihan
 Route::get('/history-tagihan/show-all', [HistoryTagihanController::class, 'showAll'])->middleware('auth:sanctum');
 Route::post('/history-tagihan/store', [HistoryTagihanController::class, 'store']);
+
+// Demo
+Route::get('/demo/reset', [DemoAppController::class, 'reset']);
 
 // Tagihan Terdaftar
 Route::prefix('/tagihan-terdaftar')->group(function() 
