@@ -29,7 +29,6 @@ class TagihanOtomatisBayar extends Command
      */
     public function handle()
     {
-
         $historyTagihanController = new HistoryTagihanController();
         $historyTagihanController->store();
     }

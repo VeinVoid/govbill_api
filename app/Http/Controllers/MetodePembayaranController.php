@@ -20,6 +20,13 @@ class MetodePembayaranController extends Controller
     public function showAll()
     {
         $metodePembayaran = auth()->user()->metodePembayaran()->get();
+
+        foreach ($metodePembayaran as $metode) {
+            $metode->id_user = (int) $metode->id_user;
+            $metode->saldo = (int) $metode->saldo;
+            $metode->pembayaran_utama = (int) $metode->pembayaran_utama;
+        }
+
         return response()->json([
             'data' => $metodePembayaran
         ], 200);

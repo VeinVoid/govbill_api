@@ -23,6 +23,13 @@ class HistoryTagihanController extends Controller
     {
         $historyTagihan = auth()->user()->historyTagihan()->orderBy('created_at', 'asc')->get();
 
+        foreach ($historyTagihan as $tagihan) {
+            $tagihan->nominal_tagihan = (int) $tagihan->nominal_tagihan;
+            $tagihan->id_user = (int) $tagihan->id_user;
+            $tagihan->id_tagihan_tersedia = (int) $tagihan->id_tagihan_tersedia;
+            $tagihan->id_metode_pembayaran = (int) $tagihan->id_metode_pembayaran;
+        }
+
         return response()->json([
             'data' => $historyTagihan,
             'message' => 'Data History Tagihan berhasil diambil'

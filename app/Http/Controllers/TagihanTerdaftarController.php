@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TagihanTerdaftarRequest;
 use App\Models\DataBPJS;
+use App\Models\DataNIK;
 use App\Models\DataPBB;
 use App\Models\DataPDAM;
 use App\Models\DataPGN;
@@ -17,6 +18,14 @@ class TagihanTerdaftarController extends Controller
     public function showAll()
     {
         $tagihanTerdaftar = auth()->user()->tagihanTerdaftar()->get();
+
+        foreach ($tagihanTerdaftar as $tagihan) {
+            $tagihan->id_user = (int) $tagihan->id_user;
+            $tagihan->nominal_tagihan = (int) $tagihan->nominal_tagihan;
+            $tagihan->tanggal_bayar = (int) $tagihan->tanggal_bayar;
+            $tagihan->bulan_bayar = (int) $tagihan->bulan_bayar;
+        }
+
         return response()->json([
             'data' => $tagihanTerdaftar
         ], 200);
@@ -63,8 +72,19 @@ class TagihanTerdaftarController extends Controller
             ->where('kota_kabupaten', $request->kota_kabupaten)
             ->first();
 
+        $nop = DataPBB::where('nop', $request->no_tagihan)->first();
+        $kota_kabupaten = DataPBB::where('kota_kabupaten', $request->kota_kabupaten)->first();
+
+        if (!$nop) {
+            return response()->json(['message' => 'NOP Tidak Ditemukan'], 400);
+        }
+
+        if (!$kota_kabupaten) {
+            return response()->json(['message' => 'Kota/Kabupaten Tidak Ditemukan'], 400);
+        }
+
         if (!$dataPBB) {
-            return response()->json(['error' => 'No tagihan does not match NOP in data_pbb table'], 400);
+            return response()->json(['message' => 'Tidak Ditemukan Data Yang Sesua'], 400);
         }
 
         $response = auth()->user()->tagihanTerdaftar()->create([
@@ -88,7 +108,7 @@ class TagihanTerdaftarController extends Controller
         $dataPLN = DataPLN::where('id_pelanggan', $request->no_tagihan)->first();
 
         if (!$dataPLN) {
-            return response()->json(['error' => 'No tagihan does not match ID Pelanggan in data_pln table'], 400);
+            return response()->json(['message' => 'ID Pelanggan Tidak Ditemukan'], 400);
         }
 
         $response = auth()->user()->tagihanTerdaftar()->create([
@@ -112,7 +132,7 @@ class TagihanTerdaftarController extends Controller
         $dataPGN = DataPGN::where('no_pelanggan', $request->no_tagihan)->first();
 
         if (!$dataPGN) {
-            return response()->json(['error' => 'No tagihan does not match ID Pelanggan in data_pgn table'], 400);
+            return response()->json(['message' => 'ID Pelanggan Tidak Ditemukan'], 400);
         }
 
         $response = auth()->user()->tagihanTerdaftar()->create([
@@ -137,8 +157,19 @@ class TagihanTerdaftarController extends Controller
             ->where('kota_kabupaten', $request->kota_kabupaten)
             ->first();
 
+        $no_pelanggan = DataPDAM::where('no_pelanggan', $request->no_tagihan)->first();
+        $kota_kabupaten = DataPDAM::where('kota_kabupaten', $request->kota_kabupaten)->first();
+
+        if (!$no_pelanggan) {
+            return response()->json(['message' => 'No Pelanggan Tidak Ditemukan'], 400);
+        }
+
+        if (!$kota_kabupaten) {
+            return response()->json(['message' => 'Kota/Kabupaten Tidak Ditemukan'], 400);
+        }
+
         if (!$dataPDAM) {
-            return response()->json(['error' => 'No tagihan does not match No Pelanggan in data_pdam table'], 400);
+            return response()->json(['message' => 'Tidak Ditemukan Data Yang Sesuai'], 400);
         }
 
         $response = auth()->user()->tagihanTerdaftar()->create([
@@ -162,7 +193,7 @@ class TagihanTerdaftarController extends Controller
         $dataBPJS = DataBPJS::where('no_va', $request->no_tagihan)->first();
 
         if (!$dataBPJS) {
-            return response()->json(['error' => 'No tagihan does not match No VA in data_bpjs table'], 400);
+            return response()->json(['message' => 'No VA Tidak Ditemukan'], 400);
         }
 
         $response = auth()->user()->tagihanTerdaftar()->create([
@@ -190,8 +221,19 @@ class TagihanTerdaftarController extends Controller
             ->where('nrkb', $request->nrkb)
             ->first();
 
+        $nik = DataNIK::where('nik', $request->nik)->first();
+        $nrkb = DataSTNK::where('nrkb', $request->nrkb)->first();
+
+        if (!$nik) {
+            return response()->json(['message' => 'NIK Tidak Ditemukan'], 400);
+        }
+
+        if (!$nrkb) {
+            return response()->json(['message' => 'NRKB Tidak Ditemukan'], 400);
+        }
+
         if (!$dataSTNK) {
-            return response()->json(['error' => 'Tidak ditemukan kendaraan dengan nik dan nrkb yang diberikan'], 400);
+            return response()->json(['message' => 'NIK ' . $request->nik . ' tidak memiliki kendaraan dengan NRKB ' . $request->nrkb], 400);
         }
 
         return response()->json([

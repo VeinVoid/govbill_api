@@ -18,6 +18,12 @@ class TagihanTersediaController extends Controller
             ->orderBy('waktu_tenggat', 'asc')
             ->get();
 
+        foreach ($tagihanTersedia as $tagihan) {
+            $tagihan->nominal_tagihan = (int) $tagihan->nominal_tagihan;
+            $tagihan->id_user = (int) $tagihan->id_user;
+            $tagihan->id_tagihan_terdaftar = (int) $tagihan->id_tagihan_terdaftar;
+        }
+
         return response()->json([
             'data' => $tagihanTersedia,
             'message' => 'Data Tagihan Tersedia berhasil diambil'
