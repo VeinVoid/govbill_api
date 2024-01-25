@@ -46,7 +46,7 @@ class HistoryTagihanController extends Controller
         foreach ($tagihanTersedias as $tagihanTersedia) {
             $dataTagihan = DataTagihan::where('no_tagihan', $tagihanTersedia->no_tagihan)->first();
             $metodePembayaran = MetodePembayaran::where('id_user', $tagihanTersedia->id_user)->where('pembayaran_utama', true)->first();
-            $dataKartu = DataKartu::where('id', $metodePembayaran->id)->first();
+            $dataKartu = DataKartu::where('no_kartu', $metodePembayaran->nomor)->first();
     
             $tagihanTersedia->update([
                 'status' => 'Lunas',
@@ -87,6 +87,47 @@ class HistoryTagihanController extends Controller
             ], 201);
         }
 
+    }
+
+    public function bayarLangsung($idTagihanTersedia, $idMetodePembayaran)
+    {
+        $tagihanTersedia = TagihanTersedia::findOrFail($idTagihanTersedia);
+        $dataTagihan = DataTagihan::where('no_tagihan', $tagihanTersedia->no_tagihan)->first();
+        $metodePembayaran = MetodePembayaran::findOrFail($idMetodePembayaran);
+        $dataKartu = DataKartu::where('no_kartu', $metodePembayaran->nomor)->first();
+
+        $tagihanTersedia->update([
+            'status' => 'Lunas',
+        ]);
+
+        $dataTagihan->update([
+            'status' => 'Lunas',
+        ]);
+
+        $metodePembayaran->update([
+            'saldo' => $metodePembayaran->saldo - $tagihanTersedia->nominal_tagihan,
+        ]);
+
+        $dataKartu->update([
+            'saldo' => $dataKartu->saldo - $tagihanTersedia->nominal_tagihan,
+        ]);
+
+        $response = auth()->user()->historyTagihan()->create([
+            'id_tagihan_tersedia' => $tagihanTersedia->id,
+            'id_metode_pembayaran' => $metodePembayaran->id,
+            'no_pembayaran' => $this->generateUniqueNoPembayaran(),
+            'jenis_tagihan' => $tagihanTersedia->jenis_tagihan,
+            'no_tagihan' => $tagihanTersedia->no_tagihan,
+            'nama_tagihan' => $tagihanTersedia->nama_tagihan,
+            'nominal_tagihan' => $tagihanTersedia->nominal_tagihan,
+            'waktu_bayar' => $tagihanTersedia->waktu_bayar,
+            'status' => $tagihanTersedia->status,
+        ]);
+
+        return response()->json([
+            'data' => $response,
+            'message' => 'History tagihan berhasil ditambahkan'
+        ], 201);
     }
 
     /**

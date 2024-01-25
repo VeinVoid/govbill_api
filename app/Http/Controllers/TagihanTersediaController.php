@@ -14,7 +14,7 @@ class TagihanTersediaController extends Controller
     public function showAll()
     {
         $tagihanTersedia = TagihanTersedia::where('id_user', auth()->user()->id)
-            ->where('status', 'Belum Lunas')
+            ->whereIn('status', ['Belum Lunas', 'Denda'])
             ->orderBy('waktu_tenggat', 'asc')
             ->get();
 
@@ -64,7 +64,7 @@ class TagihanTersediaController extends Controller
                         }
 
                         $existingTagihanTersedia = TagihanTersedia::where('no_tagihan', $tagihanTerdaftar->no_tagihan)->first();
-                    
+
                         if (!$existingTagihanTersedia) {
                             $response = auth()->user()->tagihanTersedia()->create([
                                 'id_tagihan_terdaftar' => $tagihanTerdaftar->id,
@@ -76,11 +76,11 @@ class TagihanTersediaController extends Controller
                                 'waktu_tenggat' => $dataTagihan->waktu_tenggat,
                                 'status' => 'Belum Lunas',
                             ]);
-                    
+
                             $responses[] = $response;
                         }
                     }
-                    
+
                     if (!empty($responses)) {
                         return response()->json([
                             'data' => $responses,

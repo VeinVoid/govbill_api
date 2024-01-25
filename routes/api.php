@@ -152,6 +152,7 @@ Route::delete('/metode-pembayaran/delete/{id}', [MetodePembayaranController::cla
 // History Tagihan
 Route::get('/history-tagihan/show-all', [HistoryTagihanController::class, 'showAll'])->middleware('auth:sanctum');
 Route::post('/history-tagihan/store', [HistoryTagihanController::class, 'store']);
+Route::post('/history-tagihan/bayar-langsung/{idTagihanTersedia}/{idMetodePembayaran}', [HistoryTagihanController::class, 'bayarLangsung'])->middleware('auth:sanctum');
 
 // Demo
 Route::get('/demo/reset', [DemoAppController::class, 'reset']);
