@@ -41,14 +41,18 @@ class ControllerAlamat extends Controller
     {
         $alamat = auth()->user()->alamat()->get();
 
-        return $this->showResponse($alamat);
+        return response()->json([
+            'data' => $alamat,
+        ], 200);
     }
 
     public function show($id)
     {
         $alamat = auth()->user()->alamat()->find($id);
 
-        return $this->showResponse($alamat);
+        return response()->json([
+            'data' => $alamat,
+        ], 200);
     }
 
     public function update(AlamatRequest $request, $id)

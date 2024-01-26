@@ -221,7 +221,7 @@ class TagihanTerdaftarController extends Controller
             ->where('nrkb', $request->nrkb)
             ->first();
 
-        $nik = DataNIK::where('nik', $request->nik)->first();
+        $nik = DataSTNK::where('nik', $request->nik)->first();
         $nrkb = DataSTNK::where('nrkb', $request->nrkb)->first();
 
         if (!$nik) {
