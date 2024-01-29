@@ -47,7 +47,15 @@ class HistoryTagihanController extends Controller
             $dataTagihan = DataTagihan::where('no_tagihan', $tagihanTersedia->no_tagihan)->first();
             $metodePembayaran = MetodePembayaran::where('id_user', $tagihanTersedia->id_user)->where('pembayaran_utama', true)->first();
             $dataKartu = DataKartu::where('no_kartu', $metodePembayaran->nomor)->first();
-    
+
+            if ($metodePembayaran->saldo < $tagihanTersedia->nominal_tagihan) {
+                $tagihanTersedia->update([
+                    'status' => 'Gagal',
+                ]);
+
+                continue;
+            }
+
             $tagihanTersedia->update([
                 'status' => 'Lunas',
             ]);
@@ -55,11 +63,11 @@ class HistoryTagihanController extends Controller
             $dataTagihan->update([
                 'status' => 'Lunas',
             ]);
-    
+
             $metodePembayaran->update([
                 'saldo' => $metodePembayaran->saldo - $tagihanTersedia->nominal_tagihan,
             ]);
-    
+
             $dataKartu->update([
                 'saldo' => $dataKartu->saldo - $tagihanTersedia->nominal_tagihan,
             ]);
@@ -86,7 +94,6 @@ class HistoryTagihanController extends Controller
                 'message' => 'History tagihan berhasil ditambahkan'
             ], 201);
         }
-
     }
 
     public function bayarLangsung($idTagihanTersedia, $idMetodePembayaran)

@@ -14,7 +14,7 @@ class TagihanTersediaController extends Controller
     public function showAll()
     {
         $tagihanTersedia = TagihanTersedia::where('id_user', auth()->user()->id)
-            ->whereIn('status', ['Belum Lunas', 'Denda'])
+            ->whereIn('status', ['Belum Lunas', 'Denda', 'Gagal'])
             ->orderBy('waktu_tenggat', 'asc')
             ->get();
 
@@ -36,6 +36,8 @@ class TagihanTersediaController extends Controller
 
         $today = Carbon::now();
 
+        $responses = [];
+
         foreach ($dataTagihans as $dataTagihan) {
             $waktuBisaBayar = Carbon::parse($dataTagihan->waktu_bisa_bayar);
             $waktuTenggat = Carbon::parse($dataTagihan->waktu_tenggat);
@@ -43,9 +45,9 @@ class TagihanTersediaController extends Controller
             if ($today->between($waktuBisaBayar, $waktuTenggat)) {
                 foreach ($dataTagihans as $dataTagihan) {
 
-                    $tagihanTerdaftars = TagihanTerdaftar::where('id_user', auth()->user()->id)->get();
-
-                    $responses = [];
+                    $tagihanTerdaftars = TagihanTerdaftar::where('id_user', auth()->user()->id)
+                    ->where('no_tagihan', $dataTagihan->no_tagihan)
+                    ->get();
 
                     foreach ($tagihanTerdaftars as $tagihanTerdaftar) {
                         $yearNow = Carbon::now()->year;
@@ -80,15 +82,15 @@ class TagihanTersediaController extends Controller
                             $responses[] = $response;
                         }
                     }
-
-                    if (!empty($responses)) {
-                        return response()->json([
-                            'data' => $responses,
-                            'message' => 'Tagihan Tersedia berhasil terdaftar'
-                        ], 201);
-                    }
                 }
             }
+        }
+
+        if (!empty($responses)) {
+            return response()->json([
+                'data' => $responses,
+                'message' => 'Tagihan Tersedia berhasil terdaftar'
+            ], 201);
         }
     }
 
